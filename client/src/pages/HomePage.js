@@ -8,6 +8,7 @@ const Home = (props) => {
 
   const onButtonClick = () => {
     // You'll update this function later
+    navigate('/Login');
   }
 
   return (
@@ -29,4 +30,4 @@ const Home = (props) => {
   )
 }
 
-export default Home
+export default Home;

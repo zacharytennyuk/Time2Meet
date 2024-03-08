@@ -59,43 +59,55 @@ export default function CreateAccount({}) {
     };
 
     return (
-        <div>
-            <h2>Create an account</h2>
-            <form onSubmit={createAccount}>
-                <CreateAccountTextBox
-                    label="First Name"
-                    type="text"
-                    name="firstName"
-                    value={formData.firstName}
-                    onChange={updateFormData}
-                />
-                <br/>
-                <CreateAccountTextBox
-                    label="Last Name"
-                    type="text"
-                    name="lastName"
-                    value={formData.lastName}
-                    onChange={updateFormData}
-                />
-                <br/>
-                <CreateAccountTextBox
-                    label="Username"
-                    type="text"
-                    name="userName"
-                    value={formData.userName}
-                    onChange={updateFormData}
-                />
-                <br/>
-                <CreateAccountTextBox
-                    label="Password"
-                    type="password"
-                    name="password"
-                    value={formData.password}
-                    onChange={updateFormData}
-                />
-                <br/>
-                <SubmitButton>Create Account</SubmitButton>
-            </form>
+        <div className='flex h-screen w-screen place-content-center bg-blue-300'>
+            <div className='flex h-3/5 w-2/5 self-center justify-center overflow-hidden rounded-3xl bg-blue-50'> 
+                <div className='h-full w-full'>
+                    <div className='flex justify-center items-center text-5xl h-1/8 w-full p-4'>
+                        Create an account
+                    </div>
+                    <form className='grid grid-rows-3 grid-cols-2' onSubmit={createAccount}>
+                        <div className='flex justify-center items-center h-full w-full p-4'> 
+                            <CreateAccountTextBox
+                                label="First Name"
+                                type="text"
+                                name="firstName"
+                                value={formData.firstName}
+                                onChange={updateFormData}
+                            />
+                        </div>
+                        <div className='flex justify-center items-center h-full w-full p-4'> 
+                            <CreateAccountTextBox
+                                label="Last Name"
+                                type="text"
+                                name="lastName"
+                                value={formData.lastName}
+                                onChange={updateFormData}
+                            />
+                        </div>
+                        <div className='flex justify-center items-center h-full w-full p-4'> 
+                            <CreateAccountTextBox
+                                label="Username"
+                                type="text"
+                                name="userName"
+                                value={formData.userName}
+                                onChange={updateFormData}
+                            />
+                        </div>
+                        <div className='flex justify-center items-center h-full w-full p-4'> 
+                            <CreateAccountTextBox
+                                label="Password"
+                                type="password"
+                                name="password"
+                                value={formData.password}
+                                onChange={updateFormData}
+                            />
+                        </div>
+                        <div className='flex col-span-2 justify-center items-center h-full w-full '> 
+                            <SubmitButton>Create Account</SubmitButton>
+                        </div>
+                    </form>
+                </div>
+            </div>
         </div>
       );
 }

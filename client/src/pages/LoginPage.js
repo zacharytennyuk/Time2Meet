@@ -23,7 +23,7 @@ const Login = (props)  => {
   const handleLoginButtonClick = () => {
     setUsernameFinal(username);
     setPasswordFinal(password);
-    navigate('/calendar');
+    navigate('/user-home');
   };
 
    // Event handler for Create an Account button click

@@ -21,11 +21,16 @@ export default function Calendar() {
     // Event handler for Monthly button click
     const handleMonthlyButtonClick = () => {
         setActiveTab('Monthly');
+        setCurrentMonthIndex(new Date().getMonth());
     };
 
     // Event handler for Weekly button click
     const handleWeeklyButtonClick = () => {
         setActiveTab('Weekly');
+        const currentDate = new Date();
+        const firstDayOfYear = new Date(currentDate.getFullYear(), 0, 1);
+        const pastDaysOfYear = (currentDate - firstDayOfYear) / 86400000; // Calculate days past since beginning of the year
+        setCurrentWeekIndex(Math.floor(pastDaysOfYear / 7)); // Calculate current week index
     };
 
     // Event handler for Filter button click

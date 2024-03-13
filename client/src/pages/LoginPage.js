@@ -1,12 +1,17 @@
 import React, { useState } from 'react'
+import axios from 'axios';
 import { useNavigate } from 'react-router-dom'
 import TextBox from '../components/textBox';
+
 
 const Login = (props)  => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const [usernameFinal, setUsernameFinal] = useState('');
-  const [passwordFinal, setPasswordFinal] = useState('');
+  
+  // might not be necessary - z
+  // const [usernameFinal, setUsernameFinal] = useState('');
+  // const [passwordFinal, setPasswordFinal] = useState('');
+
   const navigate = useNavigate();
 
   // Callback function to update username state
@@ -20,10 +25,39 @@ const Login = (props)  => {
   };
 
   // Event handler for Login button click
-  const handleLoginButtonClick = () => {
-    setUsernameFinal(username);
-    setPasswordFinal(password);
-    navigate('/user-home');
+  const handleLoginButtonClick = async () => {
+    // setUsernameFinal(username);
+    // setPasswordFinal(password);
+
+     // checks if all fields are entered
+     if (
+      !username.trim()
+      || !password.trim())
+    {
+      alert("Hold your horses! Please complete all fields to login :O");
+      return;
+    }
+
+    try{
+      const login = await axios.post('http://localhost:5200/api/users/login', {
+        userName: username,
+        password: password,
+      });
+
+      if (login.data.token){
+        localStorage.setItem('token', login.data.token);
+        navigate('/user-home');
+      } else{
+        alert('Username or password is incorrect.');
+      }
+    } catch (error) {
+      if (error.response) {
+        alert(error.response.data.message);
+      } else {
+        alert('Unidentified login error, please try again!');
+      }
+    }
+
   };
 
    // Event handler for Create an Account button click
@@ -48,9 +82,10 @@ const Login = (props)  => {
               />
             </div>
             <div className='flex justify-center items-center h-full w-full'> 
-              <TextBox 
+              <TextBox text-3xl
               placeholder="Enter your password"
               label="Password"
+              type="password"
               inputValue={password}
               onInputChange={handlePasswordChange}
               />

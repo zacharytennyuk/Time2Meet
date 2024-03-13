@@ -47,7 +47,7 @@ export default function CreateAccount({}) {
 
             alert(response.data.message); // "Account created!"
 
-            navigate('/home');
+            navigate('/user-home');
 
         } catch (error) {
             if (error.response && error.response.status === 400) {

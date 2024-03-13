@@ -10,7 +10,7 @@ const TextBox = (props) => {
       <label className='text-xl' htmlFor="textBox">{props.label}: </label>
       {/* Input box */}
       <input className='text-xl h-12 rounded-lg border-2 border-blue-500 size-full p-4'
-        type="text"
+        type={props.type || "text"}
         id="textBox"
         value={props.inputValue}
         onChange={handleInputChange}

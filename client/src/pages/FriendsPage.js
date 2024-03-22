@@ -11,7 +11,10 @@ export default function Friends({}) {
 
     return (
         <div>
-        <h1>Friends Page</h1>
+
+            <div className='flex '>
+                Friends
+            </div>
             <button onClick={handleHomeButtonClick}>
                 {/* SVG Icon for House */}
                 <svg width="50" height="50" xmlns="http://www.w3.org/2000/svg">

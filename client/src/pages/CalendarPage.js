@@ -42,7 +42,7 @@ export default function Calendar() {
     const handlePrevButtonClick = () => {
         if(activeTab == 'Monthly')
         {
-            //update monthy index
+            //update monthly index
             setCurrentMonthIndex(currentMonthIndex - 1);
             if(currentMonthIndex<1)
             {

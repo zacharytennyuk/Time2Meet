@@ -14,7 +14,8 @@ export default function Calendar() {
     const [currentWeekIndex, setCurrentWeekIndex] = useState(() => {
         const currentDate = new Date();
         const firstDayOfYear = new Date(currentDate.getFullYear(), 0, 1);
-        const pastDaysOfYear = (currentDate - firstDayOfYear) / 86400000; // Calculate days past since beginning of the year
+        const pastDaysOfYear = ((currentDate - firstDayOfYear) / 86400000)+1; // Calculate days past since beginning of the year
+        // first day of the year is a monday not a sunday so an additional offset is needed
         return Math.floor(pastDaysOfYear / 7); // Calculate current week index
     });
 

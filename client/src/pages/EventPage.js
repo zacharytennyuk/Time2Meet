@@ -3,13 +3,72 @@ import { useNavigate } from 'react-router-dom'
 import { Fragment } from 'react'
 import { Menu, Transition } from '@headlessui/react'
 import { ChevronDownIcon } from '@heroicons/react/20/solid'
+import { useState, useEffect } from 'react';
+import axios from 'axios';
+import CreateAccountTextBox from '../components/createAccountTextBox';
+import SubmitButton from '../components/submitButton';
 
-export default function Event({}) {
+export default function Event() {
     const navigate = useNavigate();
-    
-    // Event handler for Home button click
+
+    // state variables to hold event data
+    const [events, setEvents] = useState({
+        eventType: '',
+        eventLocation: '',
+        eventDate: '',
+        eventDescription: ''
+    });
+
+    // state variable for event types
+    const [eventTypes, setEventTypes] = useState([]);
+
+    //  update event state when input fields change
+    const updateEvent = (event) => {
+        const { name, value } = event.target;
+        setEvents(prevState => ({
+            ...prevState,
+            [name]: value
+        }));
+    };
+
+    //  fetch event types from backend or set default values
+    useEffect(() => {
+        const fetchEventTypes = async () => {
+        
+            try {
+                
+                const response = await axios.get('/api/event-types');
+                setEventTypes(response.data);
+            } catch (error) {
+                console.error('Error catching event types:', error);
+                // set default event types 
+                setEventTypes(['Personal', 'School', 'Work']);
+            }
+           
+        };
+        fetchEventTypes();
+    }, []);
+
     const handleHomeButtonClick = () => {
         navigate('/user-home');
+    };
+
+    const handleFormSubmit = async (event) => {
+        event.preventDefault();
+        try {
+            await axios.post('/api/events', events);
+            fetchEvents();
+
+        } catch (error) {
+            console.error('Error While Creating Event', error);
+        }
+    };
+
+    const handleEventTypeChange = (eventType) => {
+        setEvents(prevState => ({
+            ...prevState,
+            eventType: eventType
+        }));
     };
 
     return (

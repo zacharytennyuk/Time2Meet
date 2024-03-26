@@ -295,10 +295,56 @@ export default function Event() {
     
       <Menu as="div" className="relative inline-block text-left">
         <div>
+
           <Menu.Button className="inline-flex w-full justify-center gap-x-1.5 rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50">
             -
             <ChevronDownIcon className="-mr-1 h-5 w-5 text-gray-400" aria-hidden="true" />
           </Menu.Button>
+
+            <h1>Event Page</h1>
+            <button onClick={handleHomeButtonClick}>
+                {/* SVG Icon for House */}
+                <svg width="50" height="50" xmlns="http://www.w3.org/2000/svg">
+                    <polygon points="25 5 45 25 5 25" stroke="rgb(30 58 138)" strokeWidth="5" strokeLinecap="round" fill="rgb(30 58 138)" strokeLinejoin="round"/>
+                    <polygon points="10 20 40 20 40 45 10 45 " stroke="rgb(30 58 138)" strokeWidth="5" strokeLinecap="round" fill="rgb(30 58 138)" strokeLinejoin="round"/>
+                    <polygon points="38 10 38 20 " stroke="rgb(30 58 138)" strokeWidth="7.5" strokeLinecap="round" fill="rgb(30 58 138)" strokeLinejoin="round"/>
+                    <polygon points="20 30 20 48 30 48 30 30" stroke="white" strokeWidth="5" strokeLinecap="round" fill="white" strokeLinejoin="round"/>
+                </svg>
+            </button>
+            <form onSubmit={handleFormSubmit}>
+                <div>
+                    <label>Event Type:</label><br />
+                    {eventTypes.map((type) => (
+                        <div key={type}>
+                            <input type="checkbox" id={type} name="eventType" value={type} onChange={() => handleEventTypeChange(type)} />
+                            <label htmlFor={type}>{type}</label>
+                        </div>
+                    ))}
+                </div>
+                <CreateAccountTextBox
+                    label="Event Location"
+                    type="text"
+                    name="eventLocation"
+                    value={events.eventLocation}
+                    onChange={updateEvent}
+                />
+                <CreateAccountTextBox
+                    label="Event Date"
+                    type="date"
+                    name="eventDate"
+                    value={events.eventDate}
+                    onChange={updateEvent}
+                />
+                <CreateAccountTextBox
+                    label="Event Description"
+                    type="text"
+                    name="eventDescription"
+                    value={events.eventDescription}
+                    onChange={updateEvent}
+                />
+                <SubmitButton>Create An Event</SubmitButton>
+            </form>
+
         </div>
         <Transition
           as={Fragment}

@@ -15,7 +15,7 @@ const Home = (props) => {
       <div className={'titleContainer'}>
         <div>Welcome to</div>
       </div>
-      <div className='flex bg-blue-200 border border-blue-400 border-8 rounded-3xl w-3/5 shadow-2xl drop-shadow-lg'>
+      <div className='flex bg-blue-200 border-blue-400 border-8 rounded-3xl w-3/5 shadow-2xl drop-shadow-lg'>
         <div className='grid grid-cols-5 place-items-center p-8'>
           <div className='flex col-start-1 col-span-2 justify-center content-center items-center text-8xl text-blue-900'>
             Time

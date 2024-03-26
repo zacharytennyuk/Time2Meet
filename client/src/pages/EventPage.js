@@ -13,6 +13,7 @@ export default function Event() {
 
     // state variables to hold event data
     const [events, setEvents] = useState({
+        eventName: '',
         eventType: '',
         eventLocation: '',
         eventDate: '',
@@ -56,7 +57,7 @@ export default function Event() {
     const handleFormSubmit = async (event) => {
         event.preventDefault();
         try {
-            await axios.post('/api/events', events);
+            await axios.post('http://localhost:5200/api/events/create-event', events);
             fetchEvents();
 
         } catch (error) {
@@ -312,6 +313,13 @@ export default function Event() {
                 </svg>
             </button>
             <form onSubmit={handleFormSubmit}>
+                <CreateAccountTextBox
+                    label="Event Name"
+                    type="text"
+                    name="eventName"
+                    value={events.eventName}
+                    onChange={updateEvent}
+                />
                 <div>
                     <label>Event Type:</label><br />
                     {eventTypes.map((type) => (

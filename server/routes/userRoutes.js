@@ -52,11 +52,11 @@ router.post('/login', async (req, res) => {
         // checks if username exists in database and if password matches username
         const user = await User.findOne({userName});
         if(!user){
-            return res.status(401).send({message: "User does not exist!"});
+            return res.status(401).send({message: 'Username or password is incorrect.'});
         }
         const match = await bcrypt.compare(password, user.password);
         if(!match){
-            return res.status(402).send({message: "Password does not match username!"});
+            return res.status(402).send({message: 'Username or password is incorrect.'});
         }
 
         const token = jsonWebToken.sign({ _id: user._id }, process.env.JWT_KEY, { expiresIn: '24h' });

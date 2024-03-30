@@ -31,8 +31,8 @@ router.post('/create-account', async (req, res) => {
 
         const newUser = await user.save(); // save user
 
-
-        res.status(201).send({ message: "Account created!" });
+        const token = jsonWebToken.sign({ _id: newUser._id }, process.env.JWT_KEY, { expiresIn: '24h' });
+        res.status(201).send({ message: "Account created!", token });
 
         console.log('New user:', newUser);
 

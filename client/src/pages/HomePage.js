@@ -16,8 +16,8 @@ const Home = (props) => {
         <div>Welcome to</div>
       </div>
       <div className='flex bg-blue-200 border border-blue-400 border-8 rounded-3xl w-3/5 shadow-2xl drop-shadow-lg'>
-        <div className='grid grid-cols-5 place-items-center p-8'>
-          <div className='flex col-start-1 col-span-2 justify-center content-center items-center text-8xl text-blue-900'>
+        <div className='grid grid-cols-5 place-items-center justify-center content-center items-center p-8'>
+          <div className='flex col-start-1 col-span-2 justify-center content-center items-center text-8xl text-blue-900 font-semibold'>
             Time
           </div>
           <div className='flex bg-blue-400 size-36 col-start-3 rounded-full place-items-center justify-center'>
@@ -27,7 +27,7 @@ const Home = (props) => {
               <polyline points= "72 72 100 50"stroke="rgb(30 58 138)" strokeWidth="10" strokeLinecap="round" />
             </svg>
           </div>
-          <div className='flex col-start-4 col-span-2 justify-center content-center items-center text-8xl text-blue-900 pl-2'>
+          <div className='flex col-start-4 col-span-2 justify-center content-center items-center text-8xl text-blue-900 pl-2 font-semibold'>
             Meet
           </div>
         </div>

@@ -28,8 +28,8 @@ export default function UserHome({}) {
             <div className='flex text-center justify-center	bg-blue-400 text-2xl pb-8 text-white'>
                 In this website you are able to create schedule and share your plans with friends without the extra hassle.
             </div>
-            <div className='grid grid-cols-2 content-center justify-center place-content-center'>
-                <div className='flex col-start-1 align-center grid grid-rows-4 h-full bg-blue-400 rounded-3xl p-8 m-8'>
+            <div className='grid grid-cols-3 content-center justify-center place-content-center'>
+                <div className='flex col-start-1 align-center grid grid-rows-4 h-full bg-blue-400 rounded-3xl p-4 m-4'>
                     <div className='flex justify-center text-white text-4xl'>
                         Things to Do!
                     </div>
@@ -43,9 +43,17 @@ export default function UserHome({}) {
                         Friends
                     </button>
                 </div>
-                <div className='flex col-start-2 align-center grid grid-rows-4 h-full bg-blue-400 rounded-3xl p-8 m-8'>
+                <div className='flex col-start-2 align-center grid grid-rows-4 h-full bg-blue-400 rounded-3xl p-4 m-4'>
                     <div className='flex justify-center text-white text-4xl'>
                         Upcoming Events
+                    </div>
+                    <div>
+                        Events go here!
+                    </div>
+                </div>
+                <div className='flex col-start-3 align-center grid grid-rows-4 h-full bg-blue-400 rounded-3xl p-4 m-4'>
+                    <div className='flex justify-center text-white text-4xl'>
+                        Event Invites
                     </div>
                     <div>
                         Events go here!

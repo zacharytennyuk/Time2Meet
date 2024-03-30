@@ -12,6 +12,7 @@ export default function Friends({}) {
         deleteFriends: ''
     });
     
+    
       //  update event state when input fields change
       const updateFriends = (event) => {
         const { name, value } = event.target;
@@ -20,18 +21,25 @@ export default function Friends({}) {
             [name]: value
         }));
     };
-    
     const addFriends = async (event) => {
         event.preventDefault();
         try {
-            await axios.post('/api/friends', friends);
-           // fetchFriends();
-
+            // Assuming `friends` is properly defined and contains friend data
+            const response = await axios.post('http://localhost:5200/api/friends/add-friends', friends);
+            console.log('Friend added successfully:', response.data.message);
+            
+            // Assuming fetchFriends() is a function defined elsewhere to update the list of friends
+            fetchFriends();
+            
         } catch (error) {
-            console.error('Error While Creating Event', error);
+            if(error.response && error.response.status === 400){
+                alert(error.response.data.message);
+            }else{
+                console.error('WORK!', error);
+            }
         }
     };
-
+    
     // Event handler for Home button click
     const handleHomeButtonClick = () => {
         navigate('/user-home');

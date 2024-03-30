@@ -9,7 +9,9 @@ const newUser = new mongoose.Schema({
         type: String,
         unique: true
     },
-    password: String
+    password: String,
+    friends: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Friend' }] // Reference to Friend model
+
 });
 
 const User = mongoose.model('User', newUser);

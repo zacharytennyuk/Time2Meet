@@ -21,7 +21,7 @@ export default function UserHome({}) {
     }
 
     return (
-        <div>
+        <div className='UserHome h-screen bg-blue-200 overflow-hidden'>
             <div className='flex text-center justify-center bg-blue-400 text-5xl pt-8 text-white pb-4'>
                 Welcome to Time2Meet!
             </div>

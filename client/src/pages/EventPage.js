@@ -9,7 +9,7 @@ export default function Event() {
     const navigate = useNavigate();
 
     // state variables to hold event data
-    const [events, setEvents] = useState({
+    const [eventData, setEventData] = useState({
         eventName: '',
         eventType: '',
         eventLocation: '',
@@ -17,6 +17,7 @@ export default function Event() {
         eventDescription: '',
         eventInvitedFriends: '', 
         eventStartTime: '',
+        eventEndTime: '',
     });
 
     // state variable for event types
@@ -25,7 +26,7 @@ export default function Event() {
     //  update event state when input fields change
     const updateEvent = (event) => {
         const { name, value } = event.target;
-        setEvents(prevState => ({
+        setEventData(prevState => ({
             ...prevState,
             [name]: value
         }));
@@ -34,9 +35,7 @@ export default function Event() {
     //  fetch event types from backend or set default values
     useEffect(() => {
         const fetchEventTypes = async () => {
-        
             try {
-                
                 const response = await axios.get('/api/event-types');
                 setEventTypes(response.data);
             } catch (error) {
@@ -60,41 +59,34 @@ export default function Event() {
         // checks if all fields are entered
         if (
             !eventData.eventName.trim()
-            || !eventData.eventType.trim() 
-            || !eventData.event.trim()
-            || !eventData.password.trim())
+            || !eventData.eventDate.trim()
+            || !eventData.eventStartTime.trim()
+            || !eventData.eventEndTime.trim()
+            || !eventData.eventType.trim())
+            
         {
-            alert("Hold your horses! Please complete all fields to create your account :O");
+            alert("Please complete all required fields to create your event.");
             return;
         }
        
-        // if account is created successfully, go to home page
         try {
             //send to backend with axios
-            const response = await axios.post('http://localhost:5200/api/users/create-account', formData);
-            
+            const response = await axios.post('http://localhost:5200/api/users/create-event', eventData);
             alert(response.data.message); // "Account created!"
             localStorage.setItem('userToken', token);
             navigate('/user-home');
 
         } catch (error) {
             if (error.response && error.response.status === 400) {
-                alert(error.response.data.message); // "Please choose a different username."
+                alert(error.response.data.message);
             } else {
                 console.error('Unidentified error :/', error);
             }
         }
-        try {
-            await axios.post('http://localhost:5200/api/events/create-event', events);
-            fetchEvents();
-
-        } catch (error) {
-            console.error('Error While Creating Event', error);
-        }
     };
 
     const handleEventTypeChange = (eventType) => {
-        setEvents(prevState => ({
+        setEventData(prevState => ({
             ...prevState,
             eventType: eventType
         }));
@@ -128,7 +120,7 @@ export default function Event() {
                       label="Event Name"
                       type="text"
                       name="eventName"
-                      value={events.eventName}
+                      value={eventData.eventName}
                       onChange={updateEvent}
                   />
 
@@ -145,10 +137,10 @@ export default function Event() {
                 </div>
 
                 <CreateAccountTextBox
-                    label="Event Location"
+                    label="Event Location (optional)"
                     type="text"
                     name="eventLocation"
-                    value={events.eventLocation}
+                    value={eventData.eventLocation}
                     onChange={updateEvent}
                 />
               </div>
@@ -160,10 +152,10 @@ export default function Event() {
                 {/* COLUMN 2*/}
                 <div>
                 <CreateAccountTextBox
-                    label="Event Description"
+                    label="Event Description (optional)"
                     type="text"
                     name="eventDescription"
-                    value={events.eventDescription}
+                    value={eventData.eventDescription}
                     onChange={updateEvent}
                 />
                   
@@ -182,15 +174,15 @@ export default function Event() {
                     label="Event Date"
                     type="date"
                     name="eventDate"
-                    value={events.eventDate}
+                    value={eventData.eventDate}
                     onChange={updateEvent}
                 />
                 
                 <CreateAccountTextBox
-                    label="Invited Friends"
+                    label="Invited Friends (optional)"
                     type="text"
-                    name="Invited Friends"
-                    value={events.eventInvitedFriends}
+                    name="invitedFriends"
+                    value={eventData.eventInvitedFriends}
                     onChange={updateEvent}
                 />
 

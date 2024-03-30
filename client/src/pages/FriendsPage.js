@@ -6,7 +6,7 @@ export default function Friends({}) {
     const navigate = useNavigate();
 
     const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
-    
+
     const [friend, setFriend] = useState('');
 
     // Callback function to update friend state

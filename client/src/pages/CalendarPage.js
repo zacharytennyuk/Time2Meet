@@ -1,9 +1,57 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom'
 
+// Checkbox component
+const Checkbox = ({ label, checked, onChange }) => (
+  <label className="flex items-center">
+    <input type="checkbox" checked={checked} onChange={onChange} className="form-checkbox h-5 w-5 text-blue-600"/>
+    <span className="ml-2 text-white">{label}</span>
+  </label>
+);
+
+const Dialog = ({ isOpen, onClose }) => {
+  const [checkedWork, setCheckedWork] = React.useState(false);
+  const [checkedPersonal, setCheckedPersonal] = React.useState(false);
+  const [checkedSchool, setCheckedSchool] = React.useState(false);
+
+  const handleCheckedWork = () => {
+    setCheckedWork(!checkedWork);
+  };
+
+  const handleCheckedPersonal = () => {
+    setCheckedPersonal(!checkedPersonal);
+  };
+
+  const handleCheckedSchool = () => {
+    setCheckedSchool(!checkedSchool);
+  };
+
+  return (
+    <div className='flex bg-blue-400 p-8 m-2 rounded-xl place-contents-center justify-center'>
+        <div className='flex grid grid-rows-4 ml-4 mr-4'>
+            <Checkbox label="Work" checked={checkedWork} onChange={handleCheckedWork} />
+            <Checkbox label="Personal" checked={checkedPersonal} onChange={handleCheckedPersonal} />
+            <Checkbox label="School" checked={checkedSchool} onChange={handleCheckedSchool} />
+            <button className='bg-blue-800 text-white border-2 border-blue-500 hover:bg-white hover:text-blue-800 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 font-medium rounded-lg text-sm pt-2 pb-2 mt-2' onClick={onClose}>Close</button>
+        </div>
+    </div>
+  );
+};
 
 export default function Calendar() {
     const navigate = useNavigate();
+
+    const [isDialogOpen, setIsDialogOpen] = useState(false);
+
+    // Function to open dialog with filter button
+    const openDialog = () => {
+        setIsDialogOpen(true);
+    };
+
+    // Function to close dialog
+    const closeDialog = () => {
+        setIsDialogOpen(false);
+    };
     
     // State to keep track of the active tab
     const [activeTab, setActiveTab] = useState('Monthly');
@@ -33,11 +81,6 @@ export default function Calendar() {
         const firstDayOfYear = new Date(currentDate.getFullYear(), 0, 1);
         const pastDaysOfYear = (currentDate - firstDayOfYear) / 86400000; // Calculate days past since beginning of the year
         setCurrentWeekIndex(Math.floor(pastDaysOfYear / 7)); // Calculate current week index
-    };
-
-    // Event handler for Filter button click
-    const handleFilterButtonClick = () => {
-        
     };
 
     // Event handler for Prev button click
@@ -257,7 +300,7 @@ export default function Calendar() {
                                     <polygon points="20 30 20 48 30 48 30 30"stroke="white" strokeWidth="5"strokeLinecap="round" fill="white" strokeLinejoin="round"/>
                                 </svg>
                             </button>
-                            <button onClick={handleFilterButtonClick}>
+                            <button onClick={openDialog}>
                                 {/* SVG Icon for Filter */}
                                 <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50">
                                     <polygon points="0 0 50 0 25 25" stroke="rgb(30 58 138)" strokeWidth="5" fill="rgb(30 58 138)" strokeLinecap="round" strokeLinejoin="round"/>
@@ -286,6 +329,7 @@ export default function Calendar() {
                 <div className='flex h-full w-full justify-center overflow-x-hidden overflow-y-scroll p-2 bg-blue-200'>
                     {activeTab === 'Monthly' ? (
                         <div className='flex flex-col items-center'> 
+                            {isDialogOpen && <Dialog isOpen={isDialogOpen} onClose={closeDialog} />}
                             <div className='flex rounded-2xl bg-blue-900 text-blue-50 text-4xl text-center py-2 px-8 w-fit'>
                                 {monthNames[currentMonthIndex]}
                             </div>
@@ -331,6 +375,7 @@ export default function Calendar() {
                         </div>     
                     ) : (
                         <div className='flex flex-col items-center'> 
+                            {isDialogOpen && <Dialog isOpen={isDialogOpen} onClose={closeDialog} />}
                             <div className='grid grid-cols-7 p-2 gap-12'>
                                 <div className='flex rounded-2xl bg-blue-900 text-blue-50 text-xl justify-center items-center p-2 w-full text-center'>
                                     <div className='grid-row-2'>

@@ -3,6 +3,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import CreateAccountTextBox from '../components/createAccountTextBox';
 import SubmitButton from '../components/submitButton';
+import Dropdown from '../components/dropDownTimes';
 
 export default function Event() {
     const navigate = useNavigate();
@@ -13,7 +14,9 @@ export default function Event() {
         eventType: '',
         eventLocation: '',
         eventDate: '',
-        eventDescription: ''
+        eventDescription: '',
+        eventInvitedFriends: '', 
+        eventStartTime: '',
     });
 
     // state variable for event types
@@ -39,7 +42,7 @@ export default function Event() {
             } catch (error) {
                 console.error('Error catching event types:', error);
                 // set default event types 
-                setEventTypes(['Personal', 'School', 'Work']);
+                setEventTypes([' Personal', ' School', ' Work']);
             }
            
         };
@@ -51,7 +54,36 @@ export default function Event() {
     };
 
     const handleFormSubmit = async (event) => {
+
         event.preventDefault();
+
+        // checks if all fields are entered
+        if (
+            !eventData.eventName.trim()
+            || !eventData.eventType.trim() 
+            || !eventData.event.trim()
+            || !eventData.password.trim())
+        {
+            alert("Hold your horses! Please complete all fields to create your account :O");
+            return;
+        }
+       
+        // if account is created successfully, go to home page
+        try {
+            //send to backend with axios
+            const response = await axios.post('http://localhost:5200/api/users/create-account', formData);
+            
+            alert(response.data.message); // "Account created!"
+            localStorage.setItem('userToken', token);
+            navigate('/user-home');
+
+        } catch (error) {
+            if (error.response && error.response.status === 400) {
+                alert(error.response.data.message); // "Please choose a different username."
+            } else {
+                console.error('Unidentified error :/', error);
+            }
+        }
         try {
             await axios.post('http://localhost:5200/api/events/create-event', events);
             fetchEvents();
@@ -70,7 +102,11 @@ export default function Event() {
 
     return (
         <div>
-            <h1>Event Page</h1>
+            {/* TITLE DIV */}
+            <h1 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
+              Create An Event
+            </h1>
+
             <button onClick={handleHomeButtonClick}>
                 {/* SVG Icon for House */}
                 <svg width="50" height="50" xmlns="http://www.w3.org/2000/svg">
@@ -80,23 +116,34 @@ export default function Event() {
                     <polygon points="20 30 20 48 30 48 30 30" stroke="white" strokeWidth="5" strokeLinecap="round" fill="white" strokeLinejoin="round"/>
                 </svg>
             </button>
+
+            
+            
             <form onSubmit={handleFormSubmit}>
-                <CreateAccountTextBox
-                    label="Event Name"
-                    type="text"
-                    name="eventName"
-                    value={events.eventName}
-                    onChange={updateEvent}
-                />
+              {/* 3-COLUMN DIV*/}
+              <div className='grid grid-cols-3 p-2 px-12 gap-2'> 
+                {/* COLUMN 1*/}
                 <div>
-                    <label>Event Type:</label><br />
-                    {eventTypes.map((type) => (
-                        <div key={type}>
-                            <input type="checkbox" id={type} name="eventType" value={type} onChange={() => handleEventTypeChange(type)} />
-                            <label htmlFor={type}>{type}</label>
-                        </div>
-                    ))}
+                <CreateAccountTextBox
+                      label="Event Name"
+                      type="text"
+                      name="eventName"
+                      value={events.eventName}
+                      onChange={updateEvent}
+                  />
+
+              <div className='grid grid-cols-2  gap-1'> 
+                <div>
+                  <label className="block text-blue-900">Start Time</label>
+                  <Dropdown/>
                 </div>
+
+              
+                <div>
+                  <label className="block text-blue-900">End Time</label>
+                  <Dropdown/>
+                </div>
+
                 <CreateAccountTextBox
                     label="Event Location"
                     type="text"
@@ -104,13 +151,14 @@ export default function Event() {
                     value={events.eventLocation}
                     onChange={updateEvent}
                 />
-                <CreateAccountTextBox
-                    label="Event Date"
-                    type="date"
-                    name="eventDate"
-                    value={events.eventDate}
-                    onChange={updateEvent}
-                />
+              </div>
+                
+
+              </div>
+                 
+
+                {/* COLUMN 2*/}
+                <div>
                 <CreateAccountTextBox
                     label="Event Description"
                     type="text"
@@ -118,7 +166,40 @@ export default function Event() {
                     value={events.eventDescription}
                     onChange={updateEvent}
                 />
-                <SubmitButton>Create An Event</SubmitButton>
+                  
+                  <label className="block text-blue-900">Event Type</label>
+                    {eventTypes.map((type) => (
+                        <div key={type}>
+                            <input type="checkbox" id={type} name="eventType" value={type} onChange={() => handleEventTypeChange(type)} />
+                            <label htmlFor={type}>{type}</label>
+                        </div>
+                    ))}
+                </div>
+
+                  {/* COLUMN 3*/}
+                <div>
+                <CreateAccountTextBox
+                    label="Event Date"
+                    type="date"
+                    name="eventDate"
+                    value={events.eventDate}
+                    onChange={updateEvent}
+                />
+                
+                <CreateAccountTextBox
+                    label="Invited Friends"
+                    type="text"
+                    name="Invited Friends"
+                    value={events.eventInvitedFriends}
+                    onChange={updateEvent}
+                />
+
+                </div>
+              </div>  {/* END FORM */} 
+               
+              <div class="flex justify-center items-center h-screen">
+              <SubmitButton>Create An Event</SubmitButton>
+              </div>
             </form>
         </div>
     );

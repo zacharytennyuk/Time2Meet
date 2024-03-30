@@ -3,17 +3,24 @@ const mongoose = require('mongoose');
 const express = require('express');
 
 const newEvent = new mongoose.Schema({
-  name: String,
-  type: String,
-  start: Date,
-  end: Date,
-  location: String,
-  calendarId: {
+  eventName: { type: String, required: true },
+  eventDescription: { type: String, required: false },
+  eventDate: { type: Date, required: true },
+  eventStartTime: { type: Date, required: true },
+  eventEndTime: { type: Date, required: true },
+  eventLocation: { type: String, required: false },
+  eventType: { type: String, required: true, enum: ['Personal', 'School', 'Work'] },
+  eventUserId: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'Calendar'
-  }
+    ref: 'User',
+    required: true
+  },
+  eventInvitedFriends: [{ 
+      type: mongoose.Schema.Types.ObjectId, 
+      ref: 'User',
+      required: false 
+  }],
+  
 });
 
-const Event = mongoose.model('Event', newEvent);
-
-module.exports = Event;
+module.exports = mongoose.model('Event', newEvent);

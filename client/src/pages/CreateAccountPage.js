@@ -39,14 +39,14 @@ export default function CreateAccount({}) {
             alert("Hold your horses! Please complete all fields to create your account :O");
             return;
         }
-
+       
         // if account is created successfully, go to home page
         try {
             //send to backend with axios
             const response = await axios.post('http://localhost:5200/api/users/create-account', formData);
-
+            
             alert(response.data.message); // "Account created!"
-
+            localStorage.setItem('userToken', token);
             navigate('/user-home');
 
         } catch (error) {

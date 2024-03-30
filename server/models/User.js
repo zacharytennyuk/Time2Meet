@@ -3,15 +3,23 @@ const mongoose = require('mongoose');
 const express = require('express');
 
 const newUser = new mongoose.Schema({
-    firstName: String,
-    lastName: String,
+    firstName: { type: String, required: true },
+    lastName: { type: String, required: true },
     userName: {
         type: String,
-        unique: true
+        unique: true,
+        require: true
     },
-    password: String
+    password: { type: String, required: true },
+    eventInvitedFriends: [{ 
+        type: mongoose.Schema.Types.ObjectId, 
+        ref: 'Event',
+        required: false 
+    }],
+    friends: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User'
+    }
 });
 
-const User = mongoose.model('User', newUser);
-
-module.exports = User;
+module.exports = mongoose.model('User', newUser);

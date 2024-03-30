@@ -21,7 +21,7 @@ export default function Friends({}) {
         //verify not your own username
         //then add friend
     };
-
+    
     // Event handler for Home button click
     const handleHomeButtonClick = () => {
         navigate('/user-home');

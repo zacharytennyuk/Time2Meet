@@ -4,16 +4,16 @@ const User = require('../models/User');
 const router = express.Router();
 
 // create a new event
-router.post('/users/:userId/events', async (req, res) => {
+router.post('/create-event', async (req, res) => {
     console.log("CREATE EVENT")
     try {
-        const { userId } = req.params;
+        //const { userId } = req.params;
         const {eventName, eventDescription, eventDate, eventStartTime, eventEndTime, eventLocation, eventType, eventInvitedFriends} = req.body;
 
-        const user = await User.findById(userId);
-        if (!user) {
-            return res.status(404).send({ message: "User not found." });
-        }
+        // const user = await User.findById(userId);
+        // if (!user) {
+        //     return res.status(404).send({ message: "User not found." });
+        // }
 
         // checks if event already exists in database
         const eventExists = await Event.findOne({eventName});
@@ -30,13 +30,13 @@ router.post('/users/:userId/events', async (req, res) => {
             eventEndTime,
             eventLocation,
             eventType,
-            eventUserId: userId,
+            // eventUserId: userId,
             eventInvitedFriends
         });
         
         const newEvent = await event.save(); // save event
-        user.events.push(newEvent._id);
-        await user.save();
+        // {user.events.push(newEvent._id);}
+        // await user.save();
 
         res.status(201).send({ message: "Event created!" });
         console.log('New event:', newEvent);

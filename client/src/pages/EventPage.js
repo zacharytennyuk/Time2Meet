@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import CreateAccountTextBox from '../components/createAccountTextBox';
 import SubmitButton from '../components/submitButton';
 import Dropdown from '../components/dropDownTimes';
+import Selector from '../components/selectorComboBox';
 
 export default function Event() {
     const navigate = useNavigate();
@@ -120,7 +121,7 @@ export default function Event() {
                       label="Event Name"
                       type="text"
                       name="eventName"
-                      value={eventData.eventName}
+                      value={events.eventName}
                       onChange={updateEvent}
                   />
 
@@ -137,10 +138,10 @@ export default function Event() {
                 </div>
 
                 <CreateAccountTextBox
-                    label="Event Location (optional)"
+                    label="Event Location"
                     type="text"
                     name="eventLocation"
-                    value={eventData.eventLocation}
+                    value={events.eventLocation}
                     onChange={updateEvent}
                 />
               </div>
@@ -152,10 +153,10 @@ export default function Event() {
                 {/* COLUMN 2*/}
                 <div>
                 <CreateAccountTextBox
-                    label="Event Description (optional)"
+                    label="Event Description"
                     type="text"
                     name="eventDescription"
-                    value={eventData.eventDescription}
+                    value={events.eventDescription}
                     onChange={updateEvent}
                 />
                   
@@ -179,13 +180,13 @@ export default function Event() {
                 />
                 
                 <CreateAccountTextBox
-                    label="Invited Friends (optional)"
+                    label="Invited Friends"
                     type="text"
-                    name="invitedFriends"
-                    value={eventData.eventInvitedFriends}
+                    name="Invited Friends"
+                    value={events.eventInvitedFriends}
                     onChange={updateEvent}
                 />
-
+                <Selector/>
                 </div>
               </div>  {/* END FORM */} 
                

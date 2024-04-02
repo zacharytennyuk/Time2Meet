@@ -22,7 +22,25 @@ export default function Event() {
     });
 
     // state variable for event types
-    const [eventTypes, setEventTypes] = useState([]);
+    const eventTypes = ['Personal', 'School', 'Work']
+
+    const [eventStartTime, setEventStartTime] = useState(null);
+
+    const [eventEndTime, setEventEndTime] = useState(null);
+
+    const handleStartTime = (option) => {
+        setEventStartTime(option);
+        // Do whatever you want with the selected option here
+        console.log('Start Time:', option);
+      };
+
+      const handleEndTime = (option) => {
+        setEventEndTime(option);
+        // Do whatever you want with the selected option here
+        console.log('End Time:', option);
+      };
+
+    
 
     //  update event state when input fields change
     const updateEvent = (event) => {
@@ -33,21 +51,21 @@ export default function Event() {
         }));
     };
 
-    //  fetch event types from backend or set default values
-    useEffect(() => {
-        const fetchEventTypes = async () => {
-            try {
-                const response = await axios.get('/api/event-types');
-                setEventTypes(response.data);
-            } catch (error) {
-                console.error('Error catching event types:', error);
-                // set default event types 
-                setEventTypes([' Personal', ' School', ' Work']);
-            }
+    // //  fetch event types from backend or set default values
+    // useEffect(() => {
+    //     const fetchEventTypes = async () => {
+    //         try {
+    //             const response = await axios.get('/api/event-types');
+    //             setEventTypes(response.data);
+    //         } catch (error) {
+    //             console.error('Error catching event types:', error);
+    //             // set default event types 
+    //             setEventTypes([' Personal', ' School', ' Work']);
+    //         }
            
-        };
-        fetchEventTypes();
-    }, []);
+    //     };
+    //     fetchEventTypes();
+    // }, []);
 
     const handleHomeButtonClick = () => {
         navigate('/user-home');
@@ -58,21 +76,21 @@ export default function Event() {
         event.preventDefault();
 
         // checks if all fields are entered
-        if (
-            !eventData.eventName.trim()
-            || !eventData.eventDate.trim()
-            || !eventData.eventStartTime.trim()
-            || !eventData.eventEndTime.trim()
-            || !eventData.eventType.trim())
+        // if (
+        //     !eventData.eventName.trim()
+        //     || !eventData.eventDate.trim()
+        //     || !eventData.eventStartTime.trim()
+        //     || !eventData.eventEndTime.trim()
+        //     || !eventData.eventType.trim())
             
-        {
-            alert("Please complete all required fields to create your event.");
-            return;
-        }
+        // {
+        //     alert("Please complete all required fields to create your event.");
+        //     return;
+        // }
        
         try {
             //send to backend with axios
-            const response = await axios.post('http://localhost:5200/api/users/create-event', eventData);
+            const response = await axios.post('http://localhost:5200/api/events/create-event', eventData);
             alert(response.data.message); // "Account created!"
             localStorage.setItem('userToken', token);
             navigate('/user-home');
@@ -128,13 +146,13 @@ export default function Event() {
               <div className='grid grid-cols-2  gap-1'> 
                 <div>
                   <label className="block text-blue-900">Start Time</label>
-                  <Dropdown/>
+                  <Dropdown onSelect={handleStartTime}/>
                 </div>
 
               
                 <div>
                   <label className="block text-blue-900">End Time</label>
-                  <Dropdown/>
+                  <Dropdown onSelect={handleEndTime}/>
                 </div>
 
                 <CreateAccountTextBox
@@ -160,13 +178,35 @@ export default function Event() {
                     onChange={updateEvent}
                 />
                   
-                  <label className="block text-blue-900">Event Type</label>
+                  {/* <label className="block text-blue-900">Event Type</label>
                     {eventTypes.map((type) => (
                         <div key={type}>
                             <input type="checkbox" id={type} name="eventType" value={type} onChange={() => handleEventTypeChange(type)} />
                             <label htmlFor={type}>{type}</label>
                         </div>
+                    ))} */}
+            
+                
+                {/* Event Type Selection - Adjusted to directly use eventTypes array */}
+                <div>
+                    <label>Event Type:</label><br />
+                    {eventTypes.map((type, index) => (
+                        <div key={index}>
+                            <input 
+                                type="radio" 
+                                id={type} 
+                                name="eventType" 
+                                value={type} 
+                                onChange={updateEvent} 
+                                checked={eventData.eventType === type}
+                            />
+                            <label htmlFor={type}>{type}</label>
+                        </div>
                     ))}
+                
+                </div>
+                </div>
+
                 </div>
 
                   {/* COLUMN 3*/}
@@ -179,15 +219,14 @@ export default function Event() {
                     onChange={updateEvent}
                 />
                 
-                <CreateAccountTextBox
+                {/* <CreateAccountTextBox
                     label="Invited Friends"
                     type="text"
                     name="Invited Friends"
                     value={eventData.eventInvitedFriends}
                     onChange={updateEvent}
                 />
-                <Selector/>
-                </div>
+                <Selector/> */}
               </div>  {/* END FORM */} 
                
               <div class="flex justify-center items-center h-screen">

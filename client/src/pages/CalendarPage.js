@@ -1,9 +1,57 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom'
 
+// Checkbox component
+const Checkbox = ({ label, checked, onChange }) => (
+  <label className="flex items-center">
+    <input type="checkbox" checked={checked} onChange={onChange} className="form-checkbox h-5 w-5 text-blue-600"/>
+    <span className="ml-2 text-white">{label}</span>
+  </label>
+);
+
+const Dialog = ({ isOpen, onClose }) => {
+  const [checkedWork, setCheckedWork] = React.useState(false);
+  const [checkedPersonal, setCheckedPersonal] = React.useState(false);
+  const [checkedSchool, setCheckedSchool] = React.useState(false);
+
+  const handleCheckedWork = () => {
+    setCheckedWork(!checkedWork);
+  };
+
+  const handleCheckedPersonal = () => {
+    setCheckedPersonal(!checkedPersonal);
+  };
+
+  const handleCheckedSchool = () => {
+    setCheckedSchool(!checkedSchool);
+  };
+
+  return (
+    <div className='flex bg-blue-400 p-8 m-2 rounded-xl place-contents-center justify-center'>
+        <div className='flex grid grid-rows-4 ml-4 mr-4'>
+            <Checkbox label="Work" checked={checkedWork} onChange={handleCheckedWork} />
+            <Checkbox label="Personal" checked={checkedPersonal} onChange={handleCheckedPersonal} />
+            <Checkbox label="School" checked={checkedSchool} onChange={handleCheckedSchool} />
+            <button className='bg-blue-800 text-white border-2 border-blue-500 hover:bg-white hover:text-blue-800 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 font-medium rounded-lg text-sm pt-2 pb-2 mt-2' onClick={onClose}>Close</button>
+        </div>
+    </div>
+  );
+};
 
 export default function Calendar() {
     const navigate = useNavigate();
+
+    const [isDialogOpen, setIsDialogOpen] = useState(false);
+
+    // Function to open dialog with filter button
+    const openDialog = () => {
+        setIsDialogOpen(true);
+    };
+
+    // Function to close dialog
+    const closeDialog = () => {
+        setIsDialogOpen(false);
+    };
     
     // State to keep track of the active tab
     const [activeTab, setActiveTab] = useState('Monthly');
@@ -33,11 +81,6 @@ export default function Calendar() {
         const firstDayOfYear = new Date(currentDate.getFullYear(), 0, 1);
         const pastDaysOfYear = (currentDate - firstDayOfYear) / 86400000; // Calculate days past since beginning of the year
         setCurrentWeekIndex(Math.floor(pastDaysOfYear / 7)); // Calculate current week index
-    };
-
-    // Event handler for Filter button click
-    const handleFilterButtonClick = () => {
-        
     };
 
     // Event handler for Prev button click
@@ -235,16 +278,16 @@ export default function Calendar() {
                 <div className='h-1/6 w-full bg-blue-50 border-b-4 border-blue-900 flex justify-center items-center relative'>
                     <div className='grid grid-cols-6 gap-4 h-full w-full'>
                         <div className='flex items-end mr-5 ml-5'>
-                            <button className={`h-1/2 w-full rounded-t-2xl border-2 border-b-0 ${activeTab === 'Monthly' ? 'bg-blue-900 border-blue-900 text-blue-50' : 'bg-blue-50 border-blue-900'}`} onClick={handleMonthlyButtonClick}>
+                            <button className={`h-1/2 w-full rounded-t-2xl border-4 border-b-0 ${activeTab === 'Monthly' ? 'bg-blue-900 border-blue-900 text-blue-50' : 'bg-blue-50 text-blue-900 border-blue-900'}`} onClick={handleMonthlyButtonClick}>
                                 Monthly
                             </button> 
                         </div>
                         <div className='flex items-end mr-10'>
-                            <button className={`h-1/2 w-full rounded-t-2xl border-2 border-b-0 ${activeTab === 'Weekly' ? 'bg-blue-900 border-blue-900 text-blue-50' : 'bg-blue-50 border-blue-900'}`} onClick={handleWeeklyButtonClick}>
+                            <button className={`h-1/2 w-full rounded-t-2xl border-4 border-b-0 ${activeTab === 'Weekly' ? 'bg-blue-900 border-blue-900 text-blue-50' : 'bg-blue-50 text-blue-900 border-blue-900'}`} onClick={handleWeeklyButtonClick}>
                                 Weekly
                             </button> 
                         </div>
-                        <div className='flex justify-center items-center col-span-2 text-3xl'>
+                        <div className='flex justify-center items-center col-span-2 text-3xl text-blue-900'>
                             Your Schedule
                         </div>
                         <div className='flex justify-end items-center gap-x-6'>
@@ -257,7 +300,7 @@ export default function Calendar() {
                                     <polygon points="20 30 20 48 30 48 30 30"stroke="white" strokeWidth="5"strokeLinecap="round" fill="white" strokeLinejoin="round"/>
                                 </svg>
                             </button>
-                            <button onClick={handleFilterButtonClick}>
+                            <button onClick={openDialog}>
                                 {/* SVG Icon for Filter */}
                                 <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50">
                                     <polygon points="0 0 50 0 25 25" stroke="rgb(30 58 138)" strokeWidth="5" fill="rgb(30 58 138)" strokeLinecap="round" strokeLinejoin="round"/>
@@ -283,9 +326,10 @@ export default function Calendar() {
                         </div>
                     </div>
                 </div>
-                <div className='flex h-full w-full justify-center overflow-x-hidden overflow-y-scroll p-2'>
+                <div className='flex h-full w-full justify-center overflow-x-hidden overflow-y-scroll p-2 bg-blue-200'>
                     {activeTab === 'Monthly' ? (
                         <div className='flex flex-col items-center'> 
+                            {isDialogOpen && <Dialog isOpen={isDialogOpen} onClose={closeDialog} />}
                             <div className='flex rounded-2xl bg-blue-900 text-blue-50 text-4xl text-center py-2 px-8 w-fit'>
                                 {monthNames[currentMonthIndex]}
                             </div>
@@ -316,14 +360,14 @@ export default function Calendar() {
                                 {year2024[currentMonthIndex].map((week, weekIndex) => (
                                     <React.Fragment key={weekIndex}>
                                         {week.map((day, dayIndex) => (
-                                            <div key={dayIndex} className={`border-2 p-2 w-auto h-40 justify-center items-center ${day === 0 ? 'bg-white border-white z-0' : 'bg-white outline outline-3 outline-blue-900 border-blue-900 text-blue-900 z-40'}`}>
+                                            <div key={dayIndex} className={`border-2 p-2 w-auto h-40 justify-center items-center ${day === 0 ? 'bg-blue-200 border-blue-200 z-0' : 'bg-white outline outline-3 outline-blue-900 border-blue-900 text-blue-900 z-40'}`}>
                                                 {day !== 0 && day}
                                             </div>
                                         ))}
                                     </React.Fragment>
                                 ))}
                             </div>
-                            <div className='flex rounded-2xl border-4 border-blue-900 justify-center items-center m-4 p-2'>
+                            <div className='flex rounded-2xl border-4 border-blue-900 justify-center items-center m-4 p-2 bg-white'>
                                 <div>
                                     Event Info
                                 </div>
@@ -331,6 +375,7 @@ export default function Calendar() {
                         </div>     
                     ) : (
                         <div className='flex flex-col items-center'> 
+                            {isDialogOpen && <Dialog isOpen={isDialogOpen} onClose={closeDialog} />}
                             <div className='grid grid-cols-7 p-2 gap-12'>
                                 <div className='flex rounded-2xl bg-blue-900 text-blue-50 text-xl justify-center items-center p-2 w-full text-center'>
                                     <div className='grid-row-2'>
@@ -404,29 +449,29 @@ export default function Calendar() {
                                 </div>
                             </div>
                             <div className='grid grid-cols-7 p-2 px-12 gap-2'>
-                                <div className='flex rounded-2xl border-4 border-blue-900 text-xl justify-center items-center p-2 h-auto w-full'>
+                                <div className='flex rounded-2xl border-4 border-blue-900 text-xl justify-center items-center p-2 h-auto w-full bg-white'>
                                     Sunday events go here. Extra words to demonstrate all boxes expand to the same height.
                                 </div>
-                                <div className='flex rounded-2xl border-4 border-blue-900 text-xl justify-center items-center p-2 w-full'>
+                                <div className='flex rounded-2xl border-4 border-blue-900 text-xl justify-center items-center p-2 w-full bg-white'>
                                     Monday events go here
                                 </div>
-                                <div className='flex rounded-2xl border-4 border-blue-900 text-xl justify-center items-center p-2 w-full'>
+                                <div className='flex rounded-2xl border-4 border-blue-900 text-xl justify-center items-center p-2 w-full bg-white'>
                                     Tuesday events go here
                                 </div>
-                                <div className='flex rounded-2xl border-4 border-blue-900 text-xl justify-center items-center p-2 w-full'>
+                                <div className='flex rounded-2xl border-4 border-blue-900 text-xl justify-center items-center p-2 w-full bg-white'>
                                     Wednesday events go here
                                 </div>
-                                <div className='flex rounded-2xl border-4 border-blue-900 text-xl justify-center items-center p-2 w-full'>
+                                <div className='flex rounded-2xl border-4 border-blue-900 text-xl justify-center items-center p-2 w-full bg-white'>
                                     Thursday events go here
                                 </div>
-                                <div className='flex rounded-2xl border-4 border-blue-900 text-xl justify-center items-center p-2 w-full'>
+                                <div className='flex rounded-2xl border-4 border-blue-900 text-xl justify-center items-center p-2 w-full bg-white'>
                                     Friday events go here
                                 </div>
-                                <div className='flex rounded-2xl border-4 border-blue-900 text-xl justify-center items-center p-2 w-full'>
+                                <div className='flex rounded-2xl border-4 border-blue-900 text-xl justify-center items-center p-2 w-full bg-white'>
                                     Saturday events go here
                                 </div>
                             </div>
-                            <div className='flex rounded-2xl border-4 border-blue-900 justify-center items-center m-4 p-2'>
+                            <div className='flex rounded-2xl border-4 border-blue-900 justify-center items-center m-4 p-2 bg-white'>
                                 <div>
                                     Event Info
                                 </div>

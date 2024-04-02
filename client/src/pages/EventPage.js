@@ -12,13 +12,13 @@ export default function Event() {
     // state variables to hold event data
     const [eventData, setEventData] = useState({
         eventName: '',
-        eventType: '',
-        eventLocation: '',
-        eventDate: '',
         eventDescription: '',
-        eventInvitedFriends: '', 
+        eventDate: '',
         eventStartTime: '',
         eventEndTime: '',
+        eventType: '',
+        eventInvitedFriends: '', 
+        eventLocation: '',
     });
 
     // state variable for event types
@@ -57,18 +57,26 @@ export default function Event() {
 
         event.preventDefault();
 
-        // checks if all fields are entered
+        if (eventData.eventStartTime > eventData.eventEndTime)
+        {
+            alert("End Time cannot be before Start Time.");
+            return;
+        }
+        
+        // checks if all required fields are entered
         if (
             !eventData.eventName.trim()
             || !eventData.eventDate.trim()
             || !eventData.eventStartTime.trim()
             || !eventData.eventEndTime.trim()
             || !eventData.eventType.trim())
-            
         {
             alert("Please complete all required fields to create your event.");
             return;
         }
+
+        
+
        
         try {
             //send to backend with axios

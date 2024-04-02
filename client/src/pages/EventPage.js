@@ -57,12 +57,8 @@ export default function Event() {
 
         event.preventDefault();
 
-        if (eventData.eventStartTime > eventData.eventEndTime)
-        {
-            alert("End Time cannot be before Start Time.");
-            return;
-        }
         
+
         // checks if all required fields are entered
         if (
             !eventData.eventName.trim()
@@ -75,8 +71,11 @@ export default function Event() {
             return;
         }
 
-        
-
+        if (eventData.eventStartTime > eventData.eventEndTime)
+        {
+            alert("End Time cannot be before Start Time.");
+            return;
+        }
        
         try {
             //send to backend with axios

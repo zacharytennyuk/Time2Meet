@@ -121,7 +121,7 @@ export default function Event() {
                       label="Event Name"
                       type="text"
                       name="eventName"
-                      value={events.eventName}
+                      value={eventData.eventName}
                       onChange={updateEvent}
                   />
 
@@ -141,7 +141,7 @@ export default function Event() {
                     label="Event Location"
                     type="text"
                     name="eventLocation"
-                    value={events.eventLocation}
+                    value={eventData.eventLocation}
                     onChange={updateEvent}
                 />
               </div>
@@ -156,7 +156,7 @@ export default function Event() {
                     label="Event Description"
                     type="text"
                     name="eventDescription"
-                    value={events.eventDescription}
+                    value={eventData.eventDescription}
                     onChange={updateEvent}
                 />
                   
@@ -183,7 +183,7 @@ export default function Event() {
                     label="Invited Friends"
                     type="text"
                     name="Invited Friends"
-                    value={events.eventInvitedFriends}
+                    value={eventData.eventInvitedFriends}
                     onChange={updateEvent}
                 />
                 <Selector/>

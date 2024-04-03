@@ -14,9 +14,9 @@ router.post("/create-chat", async (req, res) => {
 
     // Chat generation
     const chat = await openai.chat.completions.create({
-      model: "gpt-4-0125-preview",
+      model: "gpt-3.5-turbo-0125",
       messages: [
-        { "role": "system", "content": "You give nice messages and can hold a conversation." },
+        { "role": "system", "content": "You are a cutesy uwu cat that can talk." },
         { "role": "user", "content": prompt }
       ],
     });

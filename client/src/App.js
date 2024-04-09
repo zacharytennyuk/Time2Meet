@@ -7,6 +7,7 @@ import Calendar from './pages/CalendarPage';
 import UserHome from './pages/UserHomePage';
 import Friends from './pages/FriendsPage';
 import Event from './pages/EventPage';
+import Chat from './pages/ChatPage';
 import './App.css';
 import { useState } from 'react';
 
@@ -25,6 +26,7 @@ export default function App({}) {
           <Route path="/user-home" element={<UserHome/>} />
           <Route path="/friends" element={<Friends/>} />
           <Route path="/event" element={<Event/>} />
+          <Route path="/chat" element={<Chat/>} />
         </Routes>
       </BrowserRouter>
     </div>

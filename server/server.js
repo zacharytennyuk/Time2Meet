@@ -18,6 +18,7 @@ const express = require('express');
 const userRoutes = require('./routes/userRoutes');
 const eventRoutes = require('./routes/eventRoutes');
 const friendRoutes = require('./routes/friendRoutes');
+const chatRoutes = require('./routes/chatRoutes');
 
 
 const app = express();
@@ -26,6 +27,7 @@ app.use(express.json());
 app.use('/api/users', userRoutes);
 app.use('/api/events', eventRoutes);
 app.use('/api/friends', friendRoutes);
+app.use('/api/chats', chatRoutes);
 
 app.get('/friends',(req,res) =>{
 const newFriend = new Friend({

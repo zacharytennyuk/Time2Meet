@@ -5,72 +5,127 @@ const User = require('../models/User');
 
 // Adding a friend by username 
 router.post('/add-friends', async (req, res) => {
+    console.log("your are at add-friends")
     try {
-        const { userName, friendUserName,firstName, lastName } = req.body;
+        const {userName} = req.body;
+        console.log("Request Body:", req.body);
 
-        const user = await Friend.findOne({ userName });
+        console.log("user: " + userName)
+
+        const user = await User.findOne({userName});
+        console.log("user: " + user)
+
         if (!user) {
             console.log("user not found");
             return res.status(404).json({ message: "User not found." });
         }
 
         // Check if friend already exists
-        const existingFriend = user_friend.friends.find(friend => friend.userName === friendUserName);
-        if (existingFriend) {
-            console.log("user is already here.");
+        // doesnt work!!!! :((
+        const friendExist = User.friends && User.friends.length > 0;
+            // Check if the friends array has at least one element
+        
+        if (friendExist ) {
+            console.log("User is already a friend.");
             return res.status(400).json({ message: "User is already a friend." });
+        } else {
+            console.log("User is not a friend.");
+            // Proceed with adding the friend
         }
+        
 
         // Create a new friend object matching the schema
         const newFriend = new Friend({
-            userName: friendUserName,
-            firstName,
-            lastName,
-            user: user._id
+            userName,
         });
-
+        
         // Push the new friend into the friends array
         user.friends.push(newFriend);
         await user.save();
 
         console.log("Friend added successfully.");
         res.status(200).json({ message: "Friend added successfully." });
+
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: "Could not add friend." });
     }
 });
 
+module.exports =router;
 
+// accept friends request 
+router.patch('/accept-friends', async(req,res)=> {
+    try{
+        const {userName} =req.body;
+        const friendUserName = req.params.friendUserName;
 
-
-// search friend by username
-router.get('/friends/:username', async (req, res) => {
-    const { username } = req.params;
-
-    try {
-        const friend = await Friend.findOne({ 'friends.userName': username }, { 'friends.$': 1 });
-        if (!friend) {
-            return res.status(404).json({ message: "Friend not found." });
+        const user = await User.findOne({userName});
+        if (!user) {
+            console.log("user not found");
+            return res.status(404).json({ message: "User not found." });
         }
+        
+        console.log(" Friend Request Accepted");
+        res.status(200).json({message:"Friend Request Accepted" }); 
 
-        res.status(200).json({ friend });
-    } catch (error) {
+    }catch(error){
         console.error(error);
-        res.status(500).json({ message: "Server error." });
+        res.status(500).json({message: "Could not accept friend request"});
     }
 });
 
-//  async function getFriend(req, res, next){
-// try{
-//     friend =await Friends.findById(req.params.id)
-//     if(friend == null){
-//         return res.status(404).json({message: 'Friend cannot be found'})
-//     }
-// }catch(error){
-//     return res.status(500).json({message: err.message})
-// }
-// next()
-//  }
+// decline friend request
+router.patch('/decline-request', async(req,res)=>{
+try{
+    const {userName} =req.body;
+    const friendUserName = req.params.friendUserName;
 
-module.exports =router;
+    const user = await User.findOne({userName});
+    if (!user) {
+        console.log("user not found");
+        return res.status(404).json({ message: "User not found." });
+    }
+    const friendIndex = user.friendRequests.findIndex(request => request.friendUserName === friendUserName);
+    if (friendIndex === -1){
+        console.log("Friend request no found ");
+        return res.status(404).json({message: " Friend Request not found"});
+    }
+
+    //remove friends request 
+    user.friendRequest.splice(friendIndex,1);
+    await user.save();
+
+    console.log("Friend request declined")
+    res.status(200).json({message:"Friend request declined" }); 
+
+}catch(error){
+    console.error(error);
+    res.status(500).json({message: "Could not decline friend request"});
+    }
+});
+
+// display all friends 
+router.get('/display-friends', async (req, res) => {
+    try {
+        const { userName } = req.body;
+
+        const user = await User.findOne({ userName });
+        if (!user) {
+            console.log("User not found");
+            return res.status(404).json({ message: "User not found." });
+        }
+
+        const friendsList = await Friend.find({ userName })
+        .then((result)=> {
+            res.send(result);
+        })
+
+        res.status(200).json({ message: "Friends are all displayed", friendsList });
+    } catch (error) {
+        console.error('Error fetching friends:', error);
+        res.status(500).json({ message: error.message });
+    }
+});
+
+module.exports = router;

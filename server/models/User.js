@@ -11,7 +11,7 @@ const newUser = new mongoose.Schema({
         require: true
     },
     password: { type: String, required: true },
-    friends: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Friend' }] // Reference to Friend model
+    friends: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Friend' }] 
 });
 
 module.exports = mongoose.model('User', newUser);

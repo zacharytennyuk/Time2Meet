@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import axios from 'axios';
 import { useNavigate } from 'react-router-dom'
 import FriendTextBox from '../components/friendTextBox'
 
@@ -15,13 +16,32 @@ export default function Friends({}) {
     };
 
     // Event handler for Home button click
-    const handleAddButtonClick = () => {
+    const handleAddButtonClick = async () => {
+        // send to backend with axios 
+        console.log("Friend username:", friend);
+        try{
+
+        const response = await axios.post('http://localhost:5200/api/friends/add-friends', {userName: friend});
+        alert(response.data.message); 
+
+        } catch (error) {
+            if (error.response && error.response.status === 404) {
+                alert(error.response.data.message); // "Please choose a different username."
+            } else if(error.response && error.response.status === 400){
+                alert(error.response.data.message);
+            }
+             else {
+                console.error('Unidentified error :/', error);
+            }
+        }
+
         //verify valid username
         //verify if already friend
         //verify not your own username
         //then add friend
     };
     
+
     // Event handler for Home button click
     const handleHomeButtonClick = () => {
         navigate('/user-home');
@@ -38,10 +58,10 @@ export default function Friends({}) {
                             <button onClick={handleHomeButtonClick}>
                                 {/* SVG Icon for House */}
                                 <svg width="50" height="50" xmlns="http://www.w3.org/2000/svg">
-                                    <polygon points="25 5 45 25 5 25" stroke="rgb(30 58 138)" stroke-width="5"stroke-linecap="round" fill="rgb(30 58 138)" stroke-linejoin="round"/>
-                                    <polygon points="10 20 40 20 40 45 10 45 "stroke="rgb(30 58 138)" stroke-width="5"stroke-linecap="round" fill="rgb(30 58 138)" stroke-linejoin="round"/>
-                                    <polygon points="38 10 38 20 "stroke="rgb(30 58 138)" stroke-width="7.5"stroke-linecap="round" fill="rgb(30 58 138)" stroke-linejoin="round"/>
-                                    <polygon points="20 30 20 48 30 48 30 30"stroke="white" stroke-width="5"stroke-linecap="round" fill="white" stroke-linejoin="round"/>
+                                    <polygon points="25 5 45 25 5 25" stroke="rgb(30 58 138)" strokeWidth="5"strokeLinecap="round" fill="rgb(30 58 138)" strokeLinejoin="round"/>
+                                    <polygon points="10 20 40 20 40 45 10 45 "stroke="rgb(30 58 138)" strokeWidth="5"strokeLinecap="round" fill="rgb(30 58 138)" strokeLinejoin="round"/>
+                                    <polygon points="38 10 38 20 "stroke="rgb(30 58 138)" strokeWidth="7.5"strokeLinecap="round" fill="rgb(30 58 138)" strokeLinejoin="round"/>
+                                    <polygon points="20 30 20 48 30 48 30 30"stroke="white" strokeWidth="5"strokeLinecap="round" fill="white" strokeLinejoin="round"/>
                                 </svg>
                             </button>
                         </div>

@@ -30,10 +30,11 @@ app.use('/api/friends', friendRoutes);
 app.use('/api/chats', chatRoutes);
 
 app.get('/friends',(req,res) =>{
+
 const newFriend = new Friend({
 
-            userName: "friends",
-            firstName: "hmaf",
+            userName: "following",
+            firstName: "hey",
             lastName: "Doe"
     
 });
@@ -45,10 +46,7 @@ newFriend.save()
     console.log(err);
  });
 
-
 })
-//app.use('/api/events', eventRoutes);
-
 
 const port = 5200;
 

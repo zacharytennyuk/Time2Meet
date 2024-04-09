@@ -7,6 +7,7 @@ const router = express.Router();
 router.post('/create-event', async (req, res) => {
     console.log("CREATE EVENT")
     try {
+        console.log(req.body.eventInvitedFriends);
         //const { userId } = req.params;
         const {eventName, eventDescription, eventDate, eventStartTime, eventEndTime, eventLocation, eventType, eventInvitedFriends} = req.body;
 
@@ -30,8 +31,7 @@ router.post('/create-event', async (req, res) => {
             eventEndTime,
             eventLocation,
             eventType,
-            // eventUserId: userId,
-            eventInvitedFriends
+            eventInvitedFriends,
         });
         
         const newEvent = await event.save(); // save event

@@ -1,74 +1,53 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { ChevronDownIcon } from '@heroicons/react/20/solid'
 
-const Selector = () => {
-  const [countries, setCountries] = useState(null);
+  // Placeholder friends
+const Selector = ({ invitedFriends, onInviteFriend }) => {
+  const friends = [
+    { name: "Kylie" },
+    { name: "Veronica" },
+    { name: "Winnie" },
+    { name: "Zach" },
+  ];
+
   const [inputValue, setInputValue] = useState("");
-  const [selected, setSelected] = useState("");
   const [open, setOpen] = useState(false);
 
-  useEffect(() => {
-    fetch("https://restcountries.com/v2/all?fields=name")
-      .then((res) => res.json())
-      .then((data) => {
-        setCountries(data);
-      });
-  }, []);
+  const handleSelect = (friendName) => {
+    onInviteFriend(friendName); // Notify the parent component
+  };
+
   return (
-    <div className="w-72 font-medium h-80">
-      <div
+    <div>
+      <label className="block text-blue-900">Invited Friends</label>
+    <div className="mt-1 p-2 border border-blue-700 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-700">
+      <div className="flex"
         onClick={() => setOpen(!open)}
-        className={`bg-white w-full p-2 flex items-center justify-between rounded ${
-          !selected && "text-gray-700"
-        }`}
       >
-        {selected
-          ? selected?.length > 25
-            ? selected?.substring(0, 25) + "..."
-            : selected
-          : "Select Country"}
-        <ChevronDownIcon className="-mr-1 h-5 w-5 text-gray-400" aria-hidden="true" />
+        {invitedFriends.length > 0 ? invitedFriends.join(", ") : "Select Friends"}
+        <ChevronDownIcon className="-mr-1 h-5 w-5" aria-hidden="true" />
       </div>
       <ul
         className={`bg-white mt-2 overflow-y-auto ${
           open ? "max-h-60" : "max-h-0"
-        } `}
+        }`}
       >
         <div className="flex items-center px-2 sticky top-0 bg-white">
-        <ChevronDownIcon className="-mr-1 h-5 w-5 text-gray-400" aria-hidden="true" />
-          <input
-            type="text"
-            value={inputValue}
-            onChange={(e) => setInputValue(e.target.value.toLowerCase())}
-            placeholder="Enter country name"
-            className="placeholder:text-gray-700 p-2 outline-none"
-          />
-        </div>
-        {countries?.map((country) => (
+
+        </div >
+        {friends.filter(friend => friend.name.toLowerCase().includes(inputValue)).map((friend) => (
           <li
-            key={country?.name}
-            className={`p-2 text-sm hover:bg-sky-600 hover:text-white
-            ${
-              country?.name?.toLowerCase() === selected?.toLowerCase() &&
-              "bg-sky-600 text-white"
-            }
-            ${
-              country?.name?.toLowerCase().startsWith(inputValue)
-                ? "block"
-                : "hidden"
+            key={friend.name}
+            className={`p-2 text-sm hover:bg-sky-600 hover:text-white cursor-pointer ${
+              invitedFriends.includes(friend.name) && "bg-sky-600 text-white"
             }`}
-            onClick={() => {
-              if (country?.name?.toLowerCase() !== selected.toLowerCase()) {
-                setSelected(country?.name);
-                setOpen(false);
-                setInputValue("");
-              }
-            }}
+            onClick={() => handleSelect(friend.name)}
           >
-            {country?.name}
+            {friend.name}
           </li>
         ))}
       </ul>
+    </div>
     </div>
   );
 };

@@ -15,11 +15,11 @@ const newEvent = new mongoose.Schema({
   //   ref: 'User',
   //   required: true
   // },
-  // eventInvitedFriends: [{ 
-  //     type: mongoose.Schema.Types.ObjectId, 
-  //     ref: 'User',
-  //     required: false 
-  // }],
+  eventInvitedFriends: [{ 
+      type: mongoose.Schema.Types.ObjectId, 
+      ref: 'User',
+      required: false 
+  }],
   
 });
 

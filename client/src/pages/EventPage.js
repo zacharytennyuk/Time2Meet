@@ -17,12 +17,10 @@ export default function Event() {
         eventStartTime: '',
         eventEndTime: '',
         eventType: '',
-        eventInvitedFriends: '', 
+        eventInvitedFriends: [], 
         eventLocation: '',
     });
 
-    // state variable for event types
-    const [eventTypes, setEventTypes] = useState([]);
 
     //  update event state when input fields change
     const updateEvent = (event) => {
@@ -33,21 +31,33 @@ export default function Event() {
         }));
     };
 
-    //  fetch event types from backend or set default values
-    useEffect(() => {
-        const fetchEventTypes = async () => {
-            try {
-                const response = await axios.get('/api/event-types');
-                setEventTypes(response.data);
-            } catch (error) {
-                console.error('Error catching event types:', error);
-                // set default event types 
-                setEventTypes([' Personal', ' School', ' Work']);
-            }
-           
-        };
-        fetchEventTypes();
-    }, []);
+    const updateTimeField = (fieldName, value) => {
+        setEventData(prevState => ({
+          ...prevState,
+          [fieldName]: value,
+        }));
+      };
+
+    //  event types
+    const eventTypes = ['Personal', 'School', 'Work'];
+
+    const handleEventTypeChange = (eventType) => {
+        setEventData(prevState => ({
+            ...prevState,
+            eventType: eventType
+        }));
+    };
+
+    const [invitedFriends, setInvitedFriends] = useState([]);
+
+    const updateInvitedFriends = (friendName) => {
+        if (invitedFriends.includes(friendName)) {
+            setInvitedFriends(invitedFriends.filter(name => name !== friendName));
+        } else {
+            setInvitedFriends([...invitedFriends, friendName]);
+        }
+      };
+    
 
     const handleHomeButtonClick = () => {
         navigate('/user-home');
@@ -56,8 +66,6 @@ export default function Event() {
     const handleFormSubmit = async (event) => {
 
         event.preventDefault();
-
-        
 
         // checks if all required fields are entered
         if (
@@ -79,10 +87,9 @@ export default function Event() {
        
         try {
             //send to backend with axios
-            const response = await axios.post('http://localhost:5200/api/users/create-event', eventData);
+            const response = await axios.post('http://localhost:5200/api/events/create-event', eventData);
             alert(response.data.message); // "Account created!"
-            localStorage.setItem('userToken', token);
-            navigate('/user-home');
+            localStorage.setItem('userToken', response.data.token); // Updated line
 
         } catch (error) {
             if (error.response && error.response.status === 400) {
@@ -91,13 +98,6 @@ export default function Event() {
                 console.error('Unidentified error :/', error);
             }
         }
-    };
-
-    const handleEventTypeChange = (eventType) => {
-        setEventData(prevState => ({
-            ...prevState,
-            eventType: eventType
-        }));
     };
 
     return (
@@ -121,8 +121,9 @@ export default function Event() {
             
             <form onSubmit={handleFormSubmit}>
               {/* 3-COLUMN DIV*/}
-              <div className='grid grid-cols-3 p-2 px-12 gap-2'> 
-                {/* COLUMN 1*/}
+
+                <div className='grid grid-cols-3 p-2 px-12 gap-2'> 
+                {/* COLUMN 1, name, time, and location*/}
                 <div>
                 <CreateAccountTextBox
                       label="Event Name"
@@ -132,16 +133,15 @@ export default function Event() {
                       onChange={updateEvent}
                   />
 
-              <div className='grid grid-cols-2  gap-1'> 
-                <div>
-                  <label className="block text-blue-900">Start Time</label>
-                  <Dropdown/>
-                </div>
-
-              
-                <div>
-                  <label className="block text-blue-900">End Time</label>
-                  <Dropdown/>
+                <div className='grid grid-cols-2 gap-1'>
+                     <div>
+                        <label className="block text-blue-900">Start Time</label>
+                        <Dropdown onChange={(value) => updateTimeField('eventStartTime', value)} />
+                    </div>
+                    <div>
+                        <label className="block text-blue-900">End Time</label>
+                        <Dropdown onChange={(value) => updateTimeField('eventEndTime', value)} />
+                    </div>
                 </div>
 
                 <CreateAccountTextBox
@@ -152,12 +152,8 @@ export default function Event() {
                     onChange={updateEvent}
                 />
               </div>
-                
-
-              </div>
                  
-
-                {/* COLUMN 2*/}
+                {/* COLUMN 2, description and eventType*/}
                 <div>
                 <CreateAccountTextBox
                     label="Event Description"
@@ -166,17 +162,24 @@ export default function Event() {
                     value={eventData.eventDescription}
                     onChange={updateEvent}
                 />
-                  
-                  <label className="block text-blue-900">Event Type</label>
-                    {eventTypes.map((type) => (
-                        <div key={type}>
-                            <input type="checkbox" id={type} name="eventType" value={type} onChange={() => handleEventTypeChange(type)} />
-                            <label htmlFor={type}>{type}</label>
-                        </div>
+            
+            <div>
+                <label className="block text-blue-900">Event Type</label>
+                <select
+                    name="eventType"
+                    value={eventData.eventType}
+                    onChange={updateEvent}
+                    className="mt-1 p-2 border border-blue-700 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-700"
+                >
+                    <option value="">Select an event type</option>
+                    {eventTypes.map(type => (
+                    <option key={type} value={type}>{type}</option>
                     ))}
+                </select>
+                </div>
                 </div>
 
-                  {/* COLUMN 3*/}
+                  {/* COLUMN 3, date and friends */}
                 <div>
                 <CreateAccountTextBox
                     label="Event Date"
@@ -186,18 +189,15 @@ export default function Event() {
                     onChange={updateEvent}
                 />
                 
-                <CreateAccountTextBox
-                    label="Invited Friends"
-                    type="text"
-                    name="Invited Friends"
-                    value={eventData.eventInvitedFriends}
-                    onChange={updateEvent}
+                {/*Invited Friends */}
+                <Selector
+                    invitedFriends={invitedFriends}
+                    onInviteFriend={updateInvitedFriends}
                 />
-                <Selector/>
                 </div>
               </div>  {/* END FORM */} 
                
-              <div class="flex justify-center items-center h-screen">
+              <div class="flex justify-center items-center">
               <SubmitButton>Create An Event</SubmitButton>
               </div>
             </form>

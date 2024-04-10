@@ -21,8 +21,8 @@ router.post('/add-friends', async (req, res) => {
         }
 
         // Check if friend already exists
-        // doesnt work!!!! :((
-        const friendExist = User.friends && User.friends.length > 0;
+            console.log(user.friends);
+        const friendExist = user.friends.length > 0;
             // Check if the friends array has at least one element
         
         if (friendExist ) {

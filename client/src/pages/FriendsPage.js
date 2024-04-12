@@ -1,14 +1,14 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom'
 import FriendTextBox from '../components/friendTextBox'
 
-export default function Friends({}) {
+export default function Friends() {
     const navigate = useNavigate();
-
     const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
-
     const [friend, setFriend] = useState('');
+    const [friends, setFriends] = useState([]);
+    const [loading, setLoading] = useState(false);
 
     // Callback function to update friend state
     const handleFriendChange = (value) => {
@@ -17,36 +17,45 @@ export default function Friends({}) {
 
     // Event handler for Home button click
     const handleAddButtonClick = async () => {
-        // send to backend with axios 
-        console.log("Friend username:", friend);
-        try{
-
-        const response = await axios.post('http://localhost:5200/api/friends/add-friends', {userName: friend});
-        alert(response.data.message); 
-
+        setLoading(true);
+        try {
+            const response = await axios.post('http://localhost:5200/api/friends/add-friends', { userName: friend });
+            alert(response.data.message);
         } catch (error) {
             if (error.response && error.response.status === 404) {
                 alert(error.response.data.message); // "Please choose a different username."
-            } else if(error.response && error.response.status === 400){
+            } else if (error.response && error.response.status === 400) {
                 alert(error.response.data.message);
-            }
-             else {
+            } else {
                 console.error('Unidentified error :/', error);
             }
+        } finally {
+            setLoading(false);
         }
-
-        //verify valid username
-        //verify if already friend
-        //verify not your own username
-        //then add friend
     };
-    
+
+    // Fetch friends data when component mounts
+    useEffect(() => {
+        const fetchFriends = async () => {
+            try {
+                setLoading(true);
+                const response = await axios.get('http://localhost:5200/api/friends/display-friends');
+                setFriends(response.data.friends);
+                //console.log(friends[0]);
+            } catch (error) {
+                console.error('Error fetching friends:', error);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchFriends();
+    }, []);
 
     // Event handler for Home button click
     const handleHomeButtonClick = () => {
         navigate('/user-home');
     };
-
     return (
             <div className= 'flex flex-col h-screen bg-blue-0'>
                 <div className='h-1/6 w-full border-b-4 border-blue-900 flex justify-center items-center relative'>

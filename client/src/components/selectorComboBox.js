@@ -20,8 +20,8 @@ const Selector = ({ invitedFriends, onInviteFriend }) => {
   return (
     <div>
       <label className="block text-blue-900">Invited Friends</label>
-    <div className="mt-1 p-2 border border-blue-700 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-700">
-      <div className="flex"
+    <div className="mt-1 p-2 border border-blue-700 bg-white rounded-md focus:outline-none focus:ring-2 focus:ring-blue-700">
+      <div className="flex bg-white"
         onClick={() => setOpen(!open)}
       >
         {invitedFriends.length > 0 ? invitedFriends.join(", ") : "Select Friends"}
@@ -38,8 +38,8 @@ const Selector = ({ invitedFriends, onInviteFriend }) => {
         {friends.filter(friend => friend.name.toLowerCase().includes(inputValue)).map((friend) => (
           <li
             key={friend.name}
-            className={`p-2 text-sm hover:bg-sky-600 hover:text-white cursor-pointer ${
-              invitedFriends.includes(friend.name) && "bg-sky-600 text-white"
+            className={`p-2 text-sm hover:bg-blue-400 hover:text-white cursor-pointer ${
+              invitedFriends.includes(friend.name) && "bg-blue-800 text-white"
             }`}
             onClick={() => handleSelect(friend.name)}
           >

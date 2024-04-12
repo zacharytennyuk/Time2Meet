@@ -108,7 +108,12 @@ try{
 // display all friends 
 router.get('/display-friends', async (req, res) => {
     try {
-        const { userName } = req.body;
+        const { userName, firstName,lastName } = req.body;
+
+        console.log("user: " + userName)
+        console.log("lastname: " + lastName)
+        console.log("firstName: " + firstName)
+
 
         const user = await User.findOne({ userName });
         if (!user) {
@@ -116,10 +121,12 @@ router.get('/display-friends', async (req, res) => {
             return res.status(404).json({ message: "User not found." });
         }
 
-        const friendsList = await Friend.find({ userName })
-        .then((result)=> {
-            res.send(result);
-        })
+        const friendsList = await Friend.find({ _id: {$in: user.friends} })
+
+        const friendDetail = friendsList.map(friends => ({
+            firstName: user.friends.firstName,
+            lastName: user.friends.lastName
+        }));
 
         res.status(200).json({ message: "Friends are all displayed", friendsList });
     } catch (error) {
@@ -127,5 +134,6 @@ router.get('/display-friends', async (req, res) => {
         res.status(500).json({ message: error.message });
     }
 });
+
 
 module.exports = router;

@@ -24,7 +24,7 @@ export default function Dropdown({onChange}) {
     onChange(hour);
   };
   return (
-    <Menu as="div" className="relative inline-block text-left mt-1 p-2 border border-blue-700 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-700">
+    <Menu as="div" className="relative inline-block text-left mt-1 p-2 border bg-white border-blue-700 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-700">
       <Menu.Button className="inline-flex justify-center w-full px-4 py-2 bg-white text-sm font-medium text-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-indigo-500">
         {selectedOption || 'Select Time'}
         <ChevronDownIcon className="-mr-1 ml-2 h-5 w-5" aria-hidden="true" />

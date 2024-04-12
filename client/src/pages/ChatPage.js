@@ -29,24 +29,29 @@ export default function ChatPage() {
     }
 
     return (
-        <div className="ChatPage">
-            <h3>Chat with me!</h3>
-            
-            {isGenerating && <p>Generating chat...</p>}
+        <div className='flex flex-col items-center justify-center h-full'>
+            <div className='text-xl text-blue-800 text-center'>
+                Chat with me!
+            </div>
 
-            {!isGenerating && (
-                <form onSubmit={handleSubmit}>
-                    <textarea
-                        value={inputText}
-                        onChange={(e) => setInputText(e.target.value)}
-                        placeholder="Type here..."
-                        required
-                    />
-                    <br />
-                    <button type="submit">Generate</button>
-                </form>
-            )}
-            <p>Generated Chat: {chat}</p>
+        {isGenerating && <div className='text-xl text-blue-800'>Generating chat...</div>}
+
+        {!isGenerating && (
+            <form onSubmit={handleSubmit} className="flex flex-col items-center">
+                <textarea
+                    value={inputText}
+                    onChange={(e) => setInputText(e.target.value)}
+                    placeholder="Type here..."
+                    className='flex w-96 text-xl h-40'
+                    required
+                />
+                <br />
+                <button type="submit" className='bg-blue-800 text-white border-2 border-blue-500 hover:bg-white hover:text-blue-800 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 font-medium rounded-2xl text-sm px-5 py-2.5 mb-2'>Generate</button>
+            </form>
+        )}
+        <div className='text-xl text-blue-800 text-center mb-8'>
+            Generated Chat: {chat}
         </div>
+    </div>
     );
 }

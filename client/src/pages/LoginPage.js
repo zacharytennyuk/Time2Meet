@@ -44,6 +44,9 @@ const Login = (props)  => {
         password: password,
       });
 
+      const userId = login.data.userId; // Assuming the response includes the userId
+      localStorage.setItem('userId', userId);
+
       if (login.data.token){
         localStorage.setItem('token', login.data.token);
         navigate('/user-home');

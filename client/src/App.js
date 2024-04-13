@@ -7,13 +7,13 @@ import Calendar from './pages/CalendarPage';
 import UserHome from './pages/UserHomePage';
 import Friends from './pages/FriendsPage';
 import Event from './pages/EventPage';
-import Chat from './pages/ChatPage';
+import AuthRoute from './components/AuthRoute';
 import './App.css';
 import { useState } from 'react';
 
-export default function App({}) {
-  const [loggedIn, setLoggedIn] = useState(false)
-  const [email, setEmail] = useState('')
+export default function App() {
+  const [loggedIn, setLoggedIn] = useState(false);
+  const [email, setEmail] = useState('');
 
   return (
     <div className="App">
@@ -22,13 +22,12 @@ export default function App({}) {
           <Route path="/" element={<Home email={email} loggedIn={loggedIn} setLoggedIn={setLoggedIn} />} />
           <Route path="/login" element={<Login setLoggedIn={setLoggedIn} setEmail={setEmail} />} />
           <Route path="/create-account" element={<CreateAccount />} />
-          <Route path="/calendar" element={<Calendar/>} />
-          <Route path="/user-home" element={<UserHome/>} />
-          <Route path="/friends" element={<Friends/>} />
-          <Route path="/event" element={<Event/>} />
-          <Route path="/chat" element={<Chat/>} />
+          <Route path="/calendar" element={<Calendar />} />
+          <Route path="/user-home" element={<AuthRoute> <UserHome /> </AuthRoute>}/>
+          <Route path="/friends" element={<Friends />} />
+          <Route path="/event" element={<Event />} />
         </Routes>
       </BrowserRouter>
     </div>
-  )
+  );
 }

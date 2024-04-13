@@ -73,5 +73,16 @@ function checkToken(req, res, next) {
     }
 }
 
+router.get('/all-events', async (req, res) => {
+    console.log("Getting all events in database");
+
+    try {
+        const events = await Event.find({});
+        res.status(200).json(events);
+    } catch (error) {
+        console.error("Error getting all events:", error);
+        res.status(500).json({ message: "Error getting all events." });
+    }
+});
 
 module.exports = router;

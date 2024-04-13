@@ -45,8 +45,15 @@ export default function CreateAccount({}) {
             //send to backend with axios
             const response = await axios.post('http://localhost:5200/api/users/create-account', formData);
             
-            alert(response.data.message); // "Account created!"
-            localStorage.setItem('token', token);
+            
+            localStorage.setItem('token', response.data.token);
+            localStorage.setItem('id', response.data.id);
+            
+            alert(response.data.message);
+            
+            console.log("token:", localStorage.token);
+            console.log("id:", localStorage.id);
+
             navigate('/user-home');
 
         } catch (error) {

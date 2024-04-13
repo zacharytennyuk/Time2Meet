@@ -9,7 +9,6 @@ import ChatPage from '../pages/ChatPage';
 
 export default function Event() {
     const navigate = useNavigate();
-
     // state variables to hold event data
     const [eventData, setEventData] = useState({
         eventName: '',
@@ -20,7 +19,7 @@ export default function Event() {
         eventType: '',
         eventInvitedFriends: [], 
         eventLocation: '',
-        eventUser: localStorage.getItem('userId')
+        eventUser: localStorage.id,
     });
 
 
@@ -79,7 +78,6 @@ export default function Event() {
 
         event.preventDefault();
 
-        const userId = localStorage.getItem('userId');
         // checks if all required fields are entered
         if (
             !eventData.eventName.trim()
@@ -100,16 +98,10 @@ export default function Event() {
        
         try {
             //send to backend with axios
-            const response = await axios.post('http://localhost:5200/api/events/create-event', eventData, {
-            headers: {
-                'Authorization': `Bearer ${localStorage.getItem('token')}`
-            }
-        });
-            alert(response.data.message); // "Account created!"
-            if (response.data.token) {
-                localStorage.setItem('token', response.data.token);
-            }
-
+            console.log("token:", localStorage.token);
+            console.log("id:", localStorage.id);
+            const response = await axios.post('http://localhost:5200/api/events/create-event', eventData);
+            alert(response.data.message);
         } catch (error) {
             if (error.response) {
                 alert(error.response.data.message);

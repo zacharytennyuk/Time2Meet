@@ -5,6 +5,7 @@ import CreateAccountTextBox from '../components/createAccountTextBox';
 import SubmitButton from '../components/submitButton';
 import Dropdown from '../components/dropDownTimes';
 import Selector from '../components/selectorComboBox';
+import ChatPage from '../pages/ChatPage';
 
 export default function Event() {
     const navigate = useNavigate();
@@ -19,6 +20,7 @@ export default function Event() {
         eventType: '',
         eventInvitedFriends: [], 
         eventLocation: '',
+        eventUser: localStorage.getItem('userId')
     });
 
 
@@ -51,12 +53,22 @@ export default function Event() {
     const [invitedFriends, setInvitedFriends] = useState([]);
 
     const updateInvitedFriends = (friendName) => {
+        console.log("Updating friends with: ", friendName);
+        let updatedInvitedFriends;
         if (invitedFriends.includes(friendName)) {
-            setInvitedFriends(invitedFriends.filter(name => name !== friendName));
+            updatedInvitedFriends = invitedFriends.filter(name => name !== friendName);
         } else {
-            setInvitedFriends([...invitedFriends, friendName]);
+            updatedInvitedFriends = [...invitedFriends, friendName];
         }
-      };
+        setInvitedFriends(updatedInvitedFriends);
+    
+        // Update eventData with the new list of invited friends
+        setEventData(prevState => ({
+            ...prevState,
+            eventInvitedFriends: updatedInvitedFriends
+        }));
+    };
+    
     
 
     const handleHomeButtonClick = () => {
@@ -67,6 +79,7 @@ export default function Event() {
 
         event.preventDefault();
 
+        const userId = localStorage.getItem('userId');
         // checks if all required fields are entered
         if (
             !eventData.eventName.trim()
@@ -87,12 +100,18 @@ export default function Event() {
        
         try {
             //send to backend with axios
-            const response = await axios.post('http://localhost:5200/api/events/create-event', eventData);
+            const response = await axios.post('http://localhost:5200/api/events/create-event', eventData, {
+            headers: {
+                'Authorization': `Bearer ${localStorage.getItem('token')}`
+            }
+        });
             alert(response.data.message); // "Account created!"
-            localStorage.setItem('userToken', response.data.token); // Updated line
+            if (response.data.token) {
+                localStorage.setItem('token', response.data.token);
+            }
 
         } catch (error) {
-            if (error.response && error.response.status === 400) {
+            if (error.response) {
                 alert(error.response.data.message);
             } else {
                 console.error('Unidentified error :/', error);
@@ -201,6 +220,7 @@ export default function Event() {
               <SubmitButton>Create An Event</SubmitButton>
               </div>
             </form>
+            <ChatPage/>
         </div>
     );
 }

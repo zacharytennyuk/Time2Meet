@@ -44,13 +44,6 @@ const Login = (props)  => {
         password: password,
       });
       
-      const id = login.data.id; // Assuming the response includes the userId
-      
-      localStorage.setItem('token', login.data.token);
-      
-
-      
-
       if (login.data.token && login.data.id){
         localStorage.setItem('token', login.data.token);
         localStorage.setItem('id', login.data.id);

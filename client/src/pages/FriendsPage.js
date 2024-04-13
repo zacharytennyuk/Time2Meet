@@ -37,6 +37,7 @@ export default function Friends() {
     // Fetch friends data when component mounts
     useEffect(() => {
         const fetchFriends = async () => {
+            setFriends(['Zachary Tenn Yuk', 'Kylie Lennon', 'Veronica Yap', 'Winnie Augustin', 'Kyle Lemon']);
             try {
                 setLoading(true);
                 const response = await axios.get('http://localhost:5200/api/friends/display-friends');
@@ -84,13 +85,20 @@ export default function Friends() {
                                     Your Friends
                                 </div>
                                 <div className='flex row-span-12 overflow-y-scroll justify-center w-full'>
-                                    <div className='flex grid grid-rows-26 w-full'>
-                                    {alphabet.map((letter, index) => (
-                                        <div key={index} className='flex text-center border-b-4 justify-center text-white border-blue'>
-                                            {letter}
-                                        </div>
-
-                                    ))}
+                                    <div className='flex grid grid-rows-auto w-full'>
+                                        {alphabet.filter(letter => friends.some(friendName => friendName.charAt(0).toUpperCase() === letter)).map((letter, index) => (
+                                            <div key={index} className='flex grid grid-rows-auto'>
+                                                <div className='flex border-b-4 justify-center text-xl text-blue-900 border-blue-900 h-8'>{letter}</div>
+                                                <div>
+                                                    {friends
+                                                        .filter(friendName => friendName.charAt(0).toUpperCase() === letter)
+                                                        .map((friendName, index) => (
+                                                            <div className='text-center text-white justify-center h-6' key={index}>{friendName}</div>
+                                                        ))
+                                                    }
+                                                </div>
+                                            </div>
+                                        ))}
                                     </div>
                                 </div>
                             </div>

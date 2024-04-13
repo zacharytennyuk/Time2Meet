@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom'
+import EventTile from '../components/eventTile';
 
 // Checkbox component
 const Checkbox = ({ label, checked, onChange }) => (
@@ -379,7 +380,7 @@ export default function Calendar() {
                                 ))}
                             </div>
                             <div className='flex rounded-2xl border-4 border-blue-900 justify-center items-center m-4 p-2 bg-white'>
-                                <div>
+                                <div className='flex text-black font-bold'>
                                     Event Info
                                 </div>
                             </div>
@@ -471,32 +472,36 @@ export default function Calendar() {
                                 </div>
                             </div>
                             <div className='grid grid-cols-7 p-2 px-12 gap-2'>
-                                <div className='flex rounded-2xl border-4 border-blue-900 text-xl justify-center items-center p-2 h-auto w-full bg-white'>
-                                    Sunday events go here. Extra words to demonstrate all boxes expand to the same height.
+                                <div className='flex rounded-2xl border-4 border-blue-900 text-xl justify-center  p-2 h-auto w-full bg-white'>
+                                    <div className='justify-center'>
+                                    <EventTile></EventTile>
+                                    <EventTile></EventTile>
+                                    </div>
                                 </div>
                                 <div className='flex rounded-2xl border-4 border-blue-900 text-xl justify-center items-center p-2 w-full bg-white'>
-                                    Monday events go here
+                                    <EventTile></EventTile>
+                                    
                                 </div>
                                 <div className='flex rounded-2xl border-4 border-blue-900 text-xl justify-center items-center p-2 w-full bg-white'>
-                                    Tuesday events go here
+                                    <EventTile></EventTile>
                                 </div>
                                 <div className='flex rounded-2xl border-4 border-blue-900 text-xl justify-center items-center p-2 w-full bg-white'>
-                                    Wednesday events go here
+                                    <EventTile></EventTile>
                                 </div>
                                 <div className='flex rounded-2xl border-4 border-blue-900 text-xl justify-center items-center p-2 w-full bg-white'>
-                                    Thursday events go here
+                                    <EventTile></EventTile>
                                 </div>
                                 <div className='flex rounded-2xl border-4 border-blue-900 text-xl justify-center items-center p-2 w-full bg-white'>
-                                    Friday events go here
+                                    <EventTile></EventTile>
                                 </div>
                                 <div className='flex rounded-2xl border-4 border-blue-900 text-xl justify-center items-center p-2 w-full bg-white'>
-                                    Saturday events go here
+                                    <EventTile></EventTile>
                                 </div>
                             </div>
-                            <div className='flex rounded-2xl border-4 border-blue-900 justify-center items-center m-4 p-2 bg-white'>
-                                <div>
+                            <div className='flex rounded-2xl border-4 border-blue-900 justify-center items-center m-4 p-2 bg-white '>
+                                <span className=" flex text-black font-bold">
                                     Event Info
-                                </div>
+                                </span>
                             </div>
                         </div>
                     )}

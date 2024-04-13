@@ -9,33 +9,29 @@ const Checkbox = ({ label, checked, onChange }) => (
   </label>
 );
 
-const Dialog = ({ isOpen, onClose }) => {
-  const [checkedWork, setCheckedWork] = React.useState(false);
-  const [checkedPersonal, setCheckedPersonal] = React.useState(false);
-  const [checkedSchool, setCheckedSchool] = React.useState(false);
+const Dialog = ({ isOpen, onClose, checkedWork, setCheckedWork, checkedPersonal, setCheckedPersonal, checkedSchool, setCheckedSchool }) => {
+    const handleCheckedWork = () => {
+        setCheckedWork(!checkedWork);
+    };
 
-  const handleCheckedWork = () => {
-    setCheckedWork(!checkedWork);
-  };
+    const handleCheckedPersonal = () => {
+        setCheckedPersonal(!checkedPersonal);
+    };
 
-  const handleCheckedPersonal = () => {
-    setCheckedPersonal(!checkedPersonal);
-  };
+    const handleCheckedSchool = () => {
+        setCheckedSchool(!checkedSchool);
+    };
 
-  const handleCheckedSchool = () => {
-    setCheckedSchool(!checkedSchool);
-  };
-
-  return (
-    <div className='flex bg-blue-400 p-8 m-2 rounded-xl place-contents-center justify-center'>
-        <div className='flex grid grid-rows-4 ml-4 mr-4'>
-            <Checkbox label="Work" checked={checkedWork} onChange={handleCheckedWork} />
-            <Checkbox label="Personal" checked={checkedPersonal} onChange={handleCheckedPersonal} />
-            <Checkbox label="School" checked={checkedSchool} onChange={handleCheckedSchool} />
-            <button className='bg-blue-800 text-white border-2 border-blue-500 hover:bg-white hover:text-blue-800 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 font-medium rounded-lg text-sm pt-2 pb-2 mt-2' onClick={onClose}>Close</button>
+    return (
+        <div className='flex bg-blue-400 p-8 m-2 rounded-xl place-contents-center justify-center'>
+            <div className='flex grid grid-rows-4 ml-4 mr-4'>
+                <Checkbox label="Work" checked={checkedWork} onChange={handleCheckedWork} />
+                <Checkbox label="Personal" checked={checkedPersonal} onChange={handleCheckedPersonal} />
+                <Checkbox label="School" checked={checkedSchool} onChange={handleCheckedSchool} />
+                <button className='bg-blue-800 text-white border-2 border-blue-500 hover:bg-white hover:text-blue-800 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 font-medium rounded-lg text-sm pt-2 pb-2 mt-2' onClick={onClose}>Apply</button>
+            </div>
         </div>
-    </div>
-  );
+    );
 };
 
 export default function Calendar() {
@@ -43,6 +39,10 @@ export default function Calendar() {
 
     const [isDialogOpen, setIsDialogOpen] = useState(false);
 
+    const [checkedWork, setCheckedWork] = React.useState(false);
+    const [checkedPersonal, setCheckedPersonal] = React.useState(false);
+    const [checkedSchool, setCheckedSchool] = React.useState(false);
+  
     // Function to open dialog with filter button
     const openDialog = () => {
         setIsDialogOpen(true);
@@ -329,7 +329,18 @@ export default function Calendar() {
                 <div className='flex h-full w-full justify-center overflow-x-hidden overflow-y-scroll p-2 bg-blue-200'>
                     {activeTab === 'Monthly' ? (
                         <div className='flex flex-col items-center'> 
-                            {isDialogOpen && <Dialog isOpen={isDialogOpen} onClose={closeDialog} />}
+                            {isDialogOpen && (
+                                <Dialog
+                                    isOpen={isDialogOpen}
+                                    onClose={closeDialog}
+                                    checkedWork={checkedWork}
+                                    setCheckedWork={setCheckedWork}
+                                    checkedPersonal={checkedPersonal}
+                                    setCheckedPersonal={setCheckedPersonal}
+                                    checkedSchool={checkedSchool}
+                                    setCheckedSchool={setCheckedSchool}
+                                />
+                            )}
                             <div className='flex rounded-2xl bg-blue-900 text-blue-50 text-4xl text-center py-2 px-8 w-fit'>
                                 {monthNames[currentMonthIndex]}
                             </div>
@@ -375,7 +386,18 @@ export default function Calendar() {
                         </div>     
                     ) : (
                         <div className='flex flex-col items-center'> 
-                            {isDialogOpen && <Dialog isOpen={isDialogOpen} onClose={closeDialog} />}
+                            {isDialogOpen && (
+                                <Dialog
+                                    isOpen={isDialogOpen}
+                                    onClose={closeDialog}
+                                    checkedWork={checkedWork}
+                                    setCheckedWork={setCheckedWork}
+                                    checkedPersonal={checkedPersonal}
+                                    setCheckedPersonal={setCheckedPersonal}
+                                    checkedSchool={checkedSchool}
+                                    setCheckedSchool={setCheckedSchool}
+                                />
+                            )}
                             <div className='grid grid-cols-7 p-2 gap-12'>
                                 <div className='flex rounded-2xl bg-blue-900 text-blue-50 text-xl justify-center items-center p-2 w-full text-center'>
                                     <div className='grid-row-2'>

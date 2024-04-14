@@ -1,21 +1,20 @@
 import React, { useState } from "react";
 import { ChevronDownIcon } from '@heroicons/react/20/solid'
 
-  // Placeholder friends
 const Selector = ({ invitedFriends, onInviteFriend }) => {
-  const friends = [
-    { name: "Kylie" },
-    { name: "Veronica" },
-    { name: "Winnie" },
-    { name: "Zach" },
-  ];
+    const friends = [
+        { name: "Kylie" },
+        { name: "Veronica" },
+        { name: "Winnie" },
+        { name: "Zach" },
+    ];
 
-  const [inputValue, setInputValue] = useState("");
-  const [open, setOpen] = useState(false);
+    const [inputValue, setInputValue] = useState("");
+    const [open, setOpen] = useState(false);
 
-  const handleSelect = (friendName) => {
-    onInviteFriend(friendName); // Notify the parent component
-  };
+    const handleSelect = (friendName) => {
+        onInviteFriend(friendName);
+    };
 
   return (
     <div>

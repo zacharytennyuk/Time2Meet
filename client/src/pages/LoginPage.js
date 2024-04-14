@@ -43,9 +43,14 @@ const Login = (props)  => {
         userName: username,
         password: password,
       });
-
-      if (login.data.token){
+      
+      if (login.data.token && login.data.id){
         localStorage.setItem('token', login.data.token);
+        localStorage.setItem('id', login.data.id);
+
+        // console.log("token:", localStorage.token);
+        // console.log("id:", localStorage.id);
+
         navigate('/user-home');
       } else{
         alert('Username or password is incorrect.');

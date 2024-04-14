@@ -78,9 +78,9 @@ export default function Friends() {
                     </div>
                 </div>
                 <div className='flex h-full w-full bg-blue-200 overflow-hidden'>
-                    <div className='flex grid grid-cols-2 grid-rows-2 h-full w-full'>
+                    <div className='flex grid-cols-2 grid-rows-2 h-full w-full'>
                         <div className='flex col-start-1 row-start-1 row-span-2 bg-blue-400 rounded-3xl m-4 p-4'>
-                            <div className='flex grid grid-rows-auto w-full h-full'>
+                            <div className='flex grid-rows-auto w-full h-full'>
                                 <div className='flex text-2xl text-white text-center justify-center row-start-1'>
                                     Your Friends
                                 </div>

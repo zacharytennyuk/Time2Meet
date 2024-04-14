@@ -56,15 +56,21 @@ router.post('/create-event', async (req, res) => {
 
 });
 
-router.get('/all-events', async (req, res) => {
-    console.log("Getting all events in database");
-
+router.get('/read-events', async (req, res) => {
+    console.log("arrived at /read-events")
     try {
-        const events = await Event.find({});
-        res.status(200).json(events);
+        const id = req.query.id;
+        console.log(id);
+        const user = await User.findById(new ObjectId(id))
+            .populate('events')  // This will replace event IDs with actual event data
+            .exec()
+        if(!user){
+            return res.status(404).send({message: 'User ID not found.'});
+        }
+        res.status(200).send(user.events);
     } catch (error) {
-        console.error("Error getting all events:", error);
-        res.status(500).json({ message: "Error getting all events." });
+        console.error(error);
+        res.status(500).json({ message: "Server error: could not display events." });
     }
 });
 

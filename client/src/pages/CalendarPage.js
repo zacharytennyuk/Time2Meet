@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom'
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 import EventTile from '../components/eventTile';
 
 // Checkbox component
@@ -35,6 +36,7 @@ const Dialog = ({ isOpen, onClose, checkedWork, setCheckedWork, checkedPersonal,
     );
 };
 
+
 export default function Calendar() {
     const navigate = useNavigate();
 
@@ -44,6 +46,30 @@ export default function Calendar() {
     const [checkedPersonal, setCheckedPersonal] = React.useState(false);
     const [checkedSchool, setCheckedSchool] = React.useState(false);
   
+    // returns an array of Event objects
+    //
+    //      variables:   
+    //              eventName, eventDate, eventStartDate,
+    //              eventEndDate, eventLocation, eventType,
+    //              eventUser (user database ID), eventInvitedFriends
+    // modify however you'd like to display the data
+    const getEvents = async () => {
+        try {
+            const id = localStorage.getItem('id');
+            console.log(id);
+            const events = await axios.get('http://localhost:5200/api/events/read-events', {
+            params: {
+                id: id
+            }
+        });
+            // prints on front end for testing
+            console.log('My events:', events.data);
+            
+        } catch (error) {
+            alert("Error fetching events: " + error.message);
+        }
+    }
+
     // Function to open dialog with filter button
     const openDialog = () => {
         setIsDialogOpen(true);
@@ -77,6 +103,7 @@ export default function Calendar() {
 
     // Event handler for Weekly button click
     const handleWeeklyButtonClick = () => {
+
         setActiveTab('Weekly');
         const currentDate = new Date();
         const firstDayOfYear = new Date(currentDate.getFullYear(), 0, 1);

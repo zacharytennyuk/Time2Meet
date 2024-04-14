@@ -1,11 +1,12 @@
 require('dotenv').config();
 const express = require('express');
 const OpenAI = require('openai');
-const openai = new OpenAI({apiKey: process.env.AI_KEY});
+const openai = new OpenAI(process.env.AI_KEY);
 const router = express.Router();
 
 router.post("/create-chat", async (req, res) => {
   try {
+    console.log("Using API Key:", process.env.AI_KEY);
     console.log("Making chat.");
 
     const { prompt } = req.body;

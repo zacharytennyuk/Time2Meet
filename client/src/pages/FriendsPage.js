@@ -1,14 +1,14 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom'
 import FriendTextBox from '../components/friendTextBox'
 
-export default function Friends({}) {
+export default function Friends() {
     const navigate = useNavigate();
-
     const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
-
     const [friend, setFriend] = useState('');
+    const [friends, setFriends] = useState([]);
+    const [loading, setLoading] = useState(false);
 
     // Callback function to update friend state
     const handleFriendChange = (value) => {
@@ -17,36 +17,46 @@ export default function Friends({}) {
 
     // Event handler for Home button click
     const handleAddButtonClick = async () => {
-        // send to backend with axios 
-        console.log("Friend username:", friend);
-        try{
-
-        const response = await axios.post('http://localhost:5200/api/friends/add-friends', {userName: friend});
-        alert(response.data.message); 
-
+        setLoading(true);
+        try {
+            const response = await axios.post('http://localhost:5200/api/friends/add-friends', { userName: friend });
+            alert(response.data.message);
         } catch (error) {
             if (error.response && error.response.status === 404) {
                 alert(error.response.data.message); // "Please choose a different username."
-            } else if(error.response && error.response.status === 400){
+            } else if (error.response && error.response.status === 400) {
                 alert(error.response.data.message);
-            }
-             else {
+            } else {
                 console.error('Unidentified error :/', error);
             }
+        } finally {
+            setLoading(false);
         }
-
-        //verify valid username
-        //verify if already friend
-        //verify not your own username
-        //then add friend
     };
-    
+
+    // Fetch friends data when component mounts
+    useEffect(() => {
+        const fetchFriends = async () => {
+            setFriends(['Zachary Tenn Yuk', 'Kylie Lennon', 'Veronica Yap', 'Winnie Augustin', 'Kyle Lemon']);
+            try {
+                setLoading(true);
+                const response = await axios.get('http://localhost:5200/api/friends/display-friends');
+                setFriends(response.data.friends);
+                //console.log(friends[0]);
+            } catch (error) {
+                console.error('Error fetching friends:', error);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchFriends();
+    }, []);
 
     // Event handler for Home button click
     const handleHomeButtonClick = () => {
         navigate('/user-home');
     };
-
     return (
             <div className= 'flex flex-col h-screen bg-blue-0'>
                 <div className='h-1/6 w-full border-b-4 border-blue-900 flex justify-center items-center relative'>
@@ -75,13 +85,20 @@ export default function Friends({}) {
                                     Your Friends
                                 </div>
                                 <div className='flex row-span-12 overflow-y-scroll justify-center w-full'>
-                                    <div className='flex grid grid-rows-26 w-full'>
-                                    {alphabet.map((letter, index) => (
-                                        <div key={index} className='flex text-center border-b-4 justify-center text-white border-blue'>
-                                            {letter}
-                                        </div>
-
-                                    ))}
+                                    <div className='flex grid grid-rows-auto w-full'>
+                                        {alphabet.filter(letter => friends.some(friendName => friendName.charAt(0).toUpperCase() === letter)).map((letter, index) => (
+                                            <div key={index} className='flex grid grid-rows-auto'>
+                                                <div className='flex border-b-4 justify-center text-xl text-blue-900 border-blue-900 h-8'>{letter}</div>
+                                                <div>
+                                                    {friends
+                                                        .filter(friendName => friendName.charAt(0).toUpperCase() === letter)
+                                                        .map((friendName, index) => (
+                                                            <div className='text-center text-white justify-center h-6' key={index}>{friendName}</div>
+                                                        ))
+                                                    }
+                                                </div>
+                                            </div>
+                                        ))}
                                     </div>
                                 </div>
                             </div>

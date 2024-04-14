@@ -1,6 +1,7 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
 import SubmitButton from '../components/submitButton';
+import EventButton from '../components/eventButton';
 
 export default function UserHome({}) {
     const navigate = useNavigate();
@@ -47,17 +48,38 @@ export default function UserHome({}) {
                     <div className='flex justify-center text-white text-4xl'>
                         Upcoming Events
                     </div>
-                    <div>
-                        Events go here!
-                    </div>
+                    <button
+                        type=""
+                        className="flex justify-between items-center bg-blue-800 text-white border-2 border-blue-500 hover:bg-white hover:text-blue-800 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2"
+                    >
+                        <span>Event Name</span>
+                        <span>Event Time</span>
+                    </button>
+
+                    <button
+                        type=""
+                        className="flex justify-between items-center bg-blue-800 text-white border-2 border-blue-500 hover:bg-white hover:text-blue-800 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2"
+                    >
+                        <span>Event Name</span>
+                        <span>Event Time</span>
+                    </button>
+
+                    <button
+                        type=""
+                        className="flex justify-between items-center bg-blue-800 text-white border-2 border-blue-500 hover:bg-white hover:text-blue-800 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2"
+                    >
+                        <span>Event Name</span>
+                        <span>Event Time</span>
+                    </button>
+
                 </div>
                 <div className='flex col-start-3 align-center grid grid-rows-4 h-full bg-blue-400 rounded-3xl p-4 m-4'>
                     <div className='flex justify-center text-white text-4xl'>
-                        Event Invites
+                        Event Invites   
                     </div>
-                    <div>
-                        Events go here!
-                    </div>
+                    <EventButton></EventButton>
+                    <EventButton></EventButton>
+                    <EventButton></EventButton>
                 </div>
             </div>
         </div>

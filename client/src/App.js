@@ -22,10 +22,10 @@ export default function App() {
           <Route path="/" element={<Home email={email} loggedIn={loggedIn} setLoggedIn={setLoggedIn} />} />
           <Route path="/login" element={<Login setLoggedIn={setLoggedIn} setEmail={setEmail} />} />
           <Route path="/create-account" element={<CreateAccount />} />
-          <Route path="/calendar" element={<Calendar />} />
-          <Route path="/user-home" element={<AuthRoute> <UserHome /> </AuthRoute>}/>
-          <Route path="/friends" element={<Friends />} />
-          <Route path="/event" element={<Event />} />
+          <Route path="/calendar" element={<AuthRoute> <Calendar /> </AuthRoute>} />
+          <Route path="/user-home" element={<AuthRoute> <UserHome /> </AuthRoute>} />
+          <Route path="/friends" element={<AuthRoute> <Friends /> </AuthRoute>} />
+          <Route path="/event" element={<AuthRoute> <Event /> </AuthRoute>} />
         </Routes>
       </BrowserRouter>
     </div>

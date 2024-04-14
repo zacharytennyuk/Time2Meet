@@ -76,7 +76,7 @@ router.post('/login', async (req, res) => {
 });
 
 router.get('/read-events', async (req, res) => {
-    console.log("arrived at /read-events)
+    console.log("arrived at /read-events")
     try {
         const user = await User.findById(req.body.eventUser);
         if(!user){

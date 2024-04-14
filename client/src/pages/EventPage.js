@@ -219,6 +219,7 @@ export default function Event() {
                     </ChatPage>
                 </div>
             </div>
+            
         </div>
     );
 }

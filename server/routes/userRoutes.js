@@ -75,20 +75,6 @@ router.post('/login', async (req, res) => {
     }
 });
 
-router.get('/read-events', async (req, res) => {
-    console.log("arrived at /read-events")
-    try {
-        const user = await User.findById(req.body.eventUser);
-        if(!user){
-            return res.status(401).send({message: 'User id did not work.'});
-        }
-        res.status(200).send(user.events);
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({ message: "Server error: could not display events." });
-    }
-});
-
 function getId(token) {
     try {
         const cracked = jsonWebToken.verify(token, process.env.JWT_KEY);

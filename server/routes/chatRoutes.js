@@ -6,7 +6,6 @@ const router = express.Router();
 
 router.post("/create-chat", async (req, res) => {
   try {
-    console.log("Using API Key:", process.env.AI_KEY);
     console.log("Making chat.");
 
     const { prompt } = req.body;

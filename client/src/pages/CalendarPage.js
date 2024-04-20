@@ -110,6 +110,7 @@ export default function Calendar() {
 
     // Event handler for Weekly button click
     const handleWeeklyButtonClick = () => {
+        getEvents();
         setActiveTab('Weekly');
         const currentDate = new Date();
         const firstDayOfYear = new Date(currentDate.getFullYear(), 0, 1);

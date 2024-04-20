@@ -536,52 +536,192 @@ export default function Calendar() {
                             <div className='grid grid-cols-7 p-2 px-12 gap-2'>
                                 <div className='flex rounded-2xl border-4 border-blue-900 text-xl justify-center  p-2 h-auto w-full bg-white'>
                                     <div className='justify-center'>
-                                    <EventTile></EventTile>
-                                    <EventTile></EventTile>
+                                        {eventsData.map((event, eventIndex) => {
+                                                    const eventDate = new Date(event.eventDate);
+                                                    const firstDayOfYear = new Date(eventDate.getFullYear(), 0, 1);
+                                                    const pastDaysOfYear = (eventDate - firstDayOfYear) / 86400000; // Calculate days past since beginning of the year
+                                                    const weekIndex = Math.floor(pastDaysOfYear / 7)+1; // Calculate current week index
+                                                    console.log(eventDate.getDay());
+                                                    if ((event.eventType === 'Work' && checkedWork) ||
+                                                        (event.eventType === 'Personal' && checkedPersonal) ||
+                                                        (event.eventType === 'School' && checkedSchool)) {
+                                                        if (currentWeekIndex === weekIndex && eventDate.getDay() === 6) {
+                                                            return (
+                                                                <div key={eventIndex} className="flex border-2 border-blue-900 bg-blue-400 text-white rounded-lg m-2 p-2 justify-center">
+                                                                    {event.eventName}
+                                                                </div>
+                                                            );
+                                                        }
+                                                    }
+                                                    return null;
+                                                })}
                                     </div>
                                 </div>
                                 <div className='flex rounded-2xl border-4 border-blue-900 text-xl justify-center items-center p-2 w-full bg-white'>
-                                    <EventTile></EventTile>
-                                    
+                                <div className='justify-center'>
+                                        {eventsData.map((event, eventIndex) => {
+                                                    const eventDate = new Date(event.eventDate);
+                                                    const firstDayOfYear = new Date(eventDate.getFullYear(), 0, 1);
+                                                    const pastDaysOfYear = (eventDate - firstDayOfYear) / 86400000; // Calculate days past since beginning of the year
+                                                    const weekIndex = Math.floor(pastDaysOfYear / 7)+1; // Calculate current week index
+                                                    console.log(eventDate.getDay());
+                                                    if ((event.eventType === 'Work' && checkedWork) ||
+                                                        (event.eventType === 'Personal' && checkedPersonal) ||
+                                                        (event.eventType === 'School' && checkedSchool)) {
+                                                        if (currentWeekIndex === weekIndex && eventDate.getDay() === 0) {
+                                                            return (
+                                                                <div key={eventIndex} className="flex border-2 border-blue-900 bg-blue-400 text-white rounded-lg m-2 p-2 justify-center">
+                                                                    {event.eventName}
+                                                                </div>
+                                                            );
+                                                        }
+                                                    }
+                                                    return null;
+                                                })}
+                                    </div>     
                                 </div>
                                 <div className='flex rounded-2xl border-4 border-blue-900 text-xl justify-center items-center p-2 w-full bg-white'>
-                                    <EventTile></EventTile>
+                                <div className='justify-center'>
+                                        {eventsData.map((event, eventIndex) => {
+                                                    const eventDate = new Date(event.eventDate);
+                                                    const firstDayOfYear = new Date(eventDate.getFullYear(), 0, 1);
+                                                    const pastDaysOfYear = (eventDate - firstDayOfYear) / 86400000; // Calculate days past since beginning of the year
+                                                    const weekIndex = Math.floor(pastDaysOfYear / 7); // Calculate current week index
+                                                    console.log(eventDate.getDay());
+                                                    if ((event.eventType === 'Work' && checkedWork) ||
+                                                        (event.eventType === 'Personal' && checkedPersonal) ||
+                                                        (event.eventType === 'School' && checkedSchool)) {
+                                                        if (currentWeekIndex === weekIndex && eventDate.getDay() === 1) {
+                                                            return (
+                                                                <div key={eventIndex} className="flex border-2 border-blue-900 bg-blue-400 text-white rounded-lg m-2 p-2 justify-center">
+                                                                    {event.eventName}
+                                                                </div>
+                                                            );
+                                                        }
+                                                    }
+                                                    return null;
+                                                })}
+                                    </div>
                                 </div>
                                 <div className='flex rounded-2xl border-4 border-blue-900 text-xl justify-center items-center p-2 w-full bg-white'>
-                                    <EventTile></EventTile>
+                                <div className='justify-center'>
+                                        {eventsData.map((event, eventIndex) => {
+                                                    const eventDate = new Date(event.eventDate);
+                                                    const firstDayOfYear = new Date(eventDate.getFullYear(), 0, 1);
+                                                    const pastDaysOfYear = (eventDate - firstDayOfYear) / 86400000; // Calculate days past since beginning of the year
+                                                    const weekIndex = Math.floor(pastDaysOfYear / 7); // Calculate current week index
+                                                    console.log(eventDate.getDay());
+                                                    if ((event.eventType === 'Work' && checkedWork) ||
+                                                        (event.eventType === 'Personal' && checkedPersonal) ||
+                                                        (event.eventType === 'School' && checkedSchool)) {
+                                                        if (currentWeekIndex === weekIndex && eventDate.getDay() === 2) {
+                                                            return (
+                                                                <div key={eventIndex} className="flex border-2 border-blue-900 bg-blue-400 text-white rounded-lg m-2 p-2 justify-center">
+                                                                    {event.eventName}
+                                                                </div>
+                                                            );
+                                                        }
+                                                    }
+                                                    return null;
+                                                })}
+                                    </div>
                                 </div>
                                 <div className='flex rounded-2xl border-4 border-blue-900 text-xl justify-center items-center p-2 w-full bg-white'>
-                                    <EventTile></EventTile>
+                                <div className='justify-center'>
+                                        {eventsData.map((event, eventIndex) => {
+                                                    const eventDate = new Date(event.eventDate);
+                                                    const firstDayOfYear = new Date(eventDate.getFullYear(), 0, 1);
+                                                    const pastDaysOfYear = (eventDate - firstDayOfYear) / 86400000; // Calculate days past since beginning of the year
+                                                    const weekIndex = Math.floor(pastDaysOfYear / 7); // Calculate current week index
+                                                    console.log(eventDate.getDay());
+                                                    if ((event.eventType === 'Work' && checkedWork) ||
+                                                        (event.eventType === 'Personal' && checkedPersonal) ||
+                                                        (event.eventType === 'School' && checkedSchool)) {
+                                                        if (currentWeekIndex === weekIndex && eventDate.getDay() === 3) {
+                                                            return (
+                                                                <div key={eventIndex} className="flex border-2 border-blue-900 bg-blue-400 text-white rounded-lg m-2 p-2 justify-center">
+                                                                    {event.eventName}
+                                                                </div>
+                                                            );
+                                                        }
+                                                    }
+                                                    return null;
+                                                })}
+                                    </div>
                                 </div>
                                 <div className='flex rounded-2xl border-4 border-blue-900 text-xl justify-center items-center p-2 w-full bg-white'>
-                                    <EventTile></EventTile>
+                                <div className='justify-center'>
+                                        {eventsData.map((event, eventIndex) => {
+                                                    const eventDate = new Date(event.eventDate);
+                                                    const firstDayOfYear = new Date(eventDate.getFullYear(), 0, 1);
+                                                    const pastDaysOfYear = (eventDate - firstDayOfYear) / 86400000; // Calculate days past since beginning of the year
+                                                    const weekIndex = Math.floor(pastDaysOfYear / 7); // Calculate current week index
+                                                    console.log(eventDate.getDay());
+                                                    if ((event.eventType === 'Work' && checkedWork) ||
+                                                        (event.eventType === 'Personal' && checkedPersonal) ||
+                                                        (event.eventType === 'School' && checkedSchool)) {
+                                                        if (currentWeekIndex === weekIndex && eventDate.getDay() === 4) {
+                                                            return (
+                                                                <div key={eventIndex} className="flex border-2 border-blue-900 bg-blue-400 text-white rounded-lg m-2 p-2 justify-center">
+                                                                    {event.eventName}
+                                                                </div>
+                                                            );
+                                                        }
+                                                    }
+                                                    return null;
+                                                })}
+                                    </div>
                                 </div>
                                 <div className='flex rounded-2xl border-4 border-blue-900 text-xl justify-center items-center p-2 w-full bg-white'>
-                                    <EventTile></EventTile>
+                                <div className='justify-center'>
+                                        {eventsData.map((event, eventIndex) => {
+                                                    const eventDate = new Date(event.eventDate);
+                                                    const firstDayOfYear = new Date(eventDate.getFullYear(), 0, 1);
+                                                    const pastDaysOfYear = (eventDate - firstDayOfYear) / 86400000; // Calculate days past since beginning of the year
+                                                    const weekIndex = Math.floor(pastDaysOfYear / 7); // Calculate current week index
+                                                    console.log(eventDate.getDay());
+                                                    if ((event.eventType === 'Work' && checkedWork) ||
+                                                        (event.eventType === 'Personal' && checkedPersonal) ||
+                                                        (event.eventType === 'School' && checkedSchool)) {
+                                                        if (currentWeekIndex === weekIndex && eventDate.getDay() === 5) {
+                                                            return (
+                                                                <div key={eventIndex} className="flex border-2 border-blue-900 bg-blue-400 text-white rounded-lg m-4 p-2 justify-center">
+                                                                    {event.eventName}
+                                                                </div>
+                                                            );
+                                                        }
+                                                    }
+                                                    return null;
+                                                })}
+                                    </div>
                                 </div>
                             </div>
                             <div className='flex rounded-2xl border-4 border-blue-900 justify-center items-center m-4 p-2 bg-white '>
-                                <div className=" flex grid grid-auto-rows">
-                                    {eventsData.map((event, index) => (
+                                <div className="flex grid grid-auto-rows">
+                                    {eventsData.map((event, index) => {
+                                        // Calculate week index
+                                        const currentDate = new Date(event.eventDate);
+                                        const firstDayOfYear = new Date(currentDate.getFullYear(), 0, 1);
+                                        const pastDaysOfYear = (currentDate - firstDayOfYear) / 86400000; // Calculate days past since beginning of the year
+                                        const weekIndex = Math.floor(pastDaysOfYear / 7); // Calculate current week index
+
+                                        return (
                                             <div key={index} className='flex rounded-2xl border-4 border-blue-900 justify-center items-center m-4 p-2 bg-blue-400'>
                                                 <div className='flex text-white font-bold grid grid-auto-rows bg-blue-400'>
                                                     <div className='text-center'>{event.eventName}</div>
-                                                    <div>Description: {event.eventDescription} </div>
+                                                    <div>Description: {event.eventDescription}</div>
                                                     <div>Date: {event.eventDate}</div>
-                                                    <div>Start Time: {event.eventStartTime} </div>
-                                                    <div>End Time: {event.eventEndTime} </div>
-                                                    <div>Location: {event.eventLocation} </div>
-                                                    <div>Type: {event.eventType} </div>
-                                                    <div>Friends: {event.eventInvitedFriends.join(', ')} </div>
-
-
-                                                    <div>Month: {new Date(event.eventDate).getMonth()}</div>
-                                                    <div>Day: {new Date(event.eventDate).getDate()}</div>
+                                                    <div>Start Time: {event.eventStartTime}</div>
+                                                    <div>End Time: {event.eventEndTime}</div>
+                                                    <div>Location: {event.eventLocation}</div>
+                                                    <div>Type: {event.eventType}</div>
+                                                    <div>Friends: {event.eventInvitedFriends.join(', ')}</div>
                                                 </div>
-                                        </div>
-                                    ))}
+                                            </div>
+                                        );
+                                    })}
                                 </div>
-                            </div>
+                             </div>
                         </div>
                     )}
                 </div>

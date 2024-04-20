@@ -415,7 +415,7 @@ export default function Calendar() {
                                                         (event.eventType === 'School' && checkedSchool)) {
                                                         if (eventDate.getMonth() === currentMonthIndex && eventDate.getDate() + 1 === day) {
                                                             return (
-                                                                <div key={eventIndex} className="flex border-2 border-blue-900 bg-blue-400 text-white rounded-lg m-2 justify-center">
+                                                                <div key={eventIndex} className="flex border-2 border-blue-900 bg-blue-400 text-white rounded-lg justify-center break-all m-2 p-2">
                                                                     {event.eventName}
                                                                 </div>
                                                             );
@@ -435,7 +435,7 @@ export default function Calendar() {
                                             <div className='flex text-white font-bold grid grid-auto-rows bg-blue-400'>
                                                 <div className='text-center'>{event.eventName}</div>
                                                 <div>Description: {event.eventDescription} </div>
-                                                <div>Date: {event.eventDate}</div>
+                                                <div>Date: {event.eventDate.substr(0,10)}</div>
                                                 <div>Start Time: {event.eventStartTime} </div>
                                                 <div>End Time: {event.eventEndTime} </div>
                                                 <div>Location: {event.eventLocation} </div>
@@ -534,7 +534,7 @@ export default function Calendar() {
                                 </div>
                             </div>
                             <div className='grid grid-cols-7 p-2 px-12 gap-2'>
-                                <div className='flex rounded-2xl border-4 border-blue-900 text-xl justify-center  p-2 h-auto w-full bg-white'>
+                                <div className='flex rounded-2xl border-4 border-blue-900 text-xl justify-center p-2 min-h-24 w-40 bg-white'>
                                     <div className='justify-center'>
                                         {eventsData.map((event, eventIndex) => {
                                                     const eventDate = new Date(event.eventDate);
@@ -547,7 +547,7 @@ export default function Calendar() {
                                                         (event.eventType === 'School' && checkedSchool)) {
                                                         if (currentWeekIndex === weekIndex && eventDate.getDay() === 6) {
                                                             return (
-                                                                <div key={eventIndex} className="flex border-2 border-blue-900 bg-blue-400 text-white rounded-lg m-2 p-2 justify-center">
+                                                                <div key={eventIndex} className="flex border-2 border-blue-900 bg-blue-400 text-white rounded-lg m-2 p-2 break-all justify-center">
                                                                     {event.eventName}
                                                                 </div>
                                                             );
@@ -557,7 +557,7 @@ export default function Calendar() {
                                                 })}
                                     </div>
                                 </div>
-                                <div className='flex rounded-2xl border-4 border-blue-900 text-xl justify-center items-center p-2 w-full bg-white'>
+                                <div className='flex rounded-2xl border-4 border-blue-900 text-xl justify-center items-center p-2 w-40 bg-white'>
                                 <div className='justify-center'>
                                         {eventsData.map((event, eventIndex) => {
                                                     const eventDate = new Date(event.eventDate);
@@ -570,7 +570,7 @@ export default function Calendar() {
                                                         (event.eventType === 'School' && checkedSchool)) {
                                                         if (currentWeekIndex === weekIndex && eventDate.getDay() === 0) {
                                                             return (
-                                                                <div key={eventIndex} className="flex border-2 border-blue-900 bg-blue-400 text-white rounded-lg m-2 p-2 justify-center">
+                                                                <div key={eventIndex} className="flex border-2 border-blue-900 bg-blue-400 text-white rounded-lg m-2 p-2 break-all justify-center">
                                                                     {event.eventName}
                                                                 </div>
                                                             );
@@ -580,7 +580,7 @@ export default function Calendar() {
                                                 })}
                                     </div>     
                                 </div>
-                                <div className='flex rounded-2xl border-4 border-blue-900 text-xl justify-center items-center p-2 w-full bg-white'>
+                                <div className='flex rounded-2xl border-4 border-blue-900 text-xl justify-center items-center p-2 w-40 bg-white'>
                                 <div className='justify-center'>
                                         {eventsData.map((event, eventIndex) => {
                                                     const eventDate = new Date(event.eventDate);
@@ -593,7 +593,7 @@ export default function Calendar() {
                                                         (event.eventType === 'School' && checkedSchool)) {
                                                         if (currentWeekIndex === weekIndex && eventDate.getDay() === 1) {
                                                             return (
-                                                                <div key={eventIndex} className="flex border-2 border-blue-900 bg-blue-400 text-white rounded-lg m-2 p-2 justify-center">
+                                                                <div key={eventIndex} className="flex border-2 border-blue-900 bg-blue-400 text-white rounded-lg m-2 p-2 break-all justify-center">
                                                                     {event.eventName}
                                                                 </div>
                                                             );
@@ -603,7 +603,7 @@ export default function Calendar() {
                                                 })}
                                     </div>
                                 </div>
-                                <div className='flex rounded-2xl border-4 border-blue-900 text-xl justify-center items-center p-2 w-full bg-white'>
+                                <div className='flex rounded-2xl border-4 border-blue-900 text-xl justify-center items-center p-2 w-40 bg-white'>
                                 <div className='justify-center'>
                                         {eventsData.map((event, eventIndex) => {
                                                     const eventDate = new Date(event.eventDate);
@@ -616,7 +616,7 @@ export default function Calendar() {
                                                         (event.eventType === 'School' && checkedSchool)) {
                                                         if (currentWeekIndex === weekIndex && eventDate.getDay() === 2) {
                                                             return (
-                                                                <div key={eventIndex} className="flex border-2 border-blue-900 bg-blue-400 text-white rounded-lg m-2 p-2 justify-center">
+                                                                <div key={eventIndex} className="flex border-2 border-blue-900 bg-blue-400 text-white rounded-lg m-2 p-2 break-all justify-center">
                                                                     {event.eventName}
                                                                 </div>
                                                             );
@@ -626,7 +626,7 @@ export default function Calendar() {
                                                 })}
                                     </div>
                                 </div>
-                                <div className='flex rounded-2xl border-4 border-blue-900 text-xl justify-center items-center p-2 w-full bg-white'>
+                                <div className='flex rounded-2xl border-4 border-blue-900 text-xl justify-center items-center p-2 w-40 bg-white'>
                                 <div className='justify-center'>
                                         {eventsData.map((event, eventIndex) => {
                                                     const eventDate = new Date(event.eventDate);
@@ -639,7 +639,7 @@ export default function Calendar() {
                                                         (event.eventType === 'School' && checkedSchool)) {
                                                         if (currentWeekIndex === weekIndex && eventDate.getDay() === 3) {
                                                             return (
-                                                                <div key={eventIndex} className="flex border-2 border-blue-900 bg-blue-400 text-white rounded-lg m-2 p-2 justify-center">
+                                                                <div key={eventIndex} className="flex border-2 border-blue-900 bg-blue-400 text-white rounded-lg m-2 p-2 break-all justify-center">
                                                                     {event.eventName}
                                                                 </div>
                                                             );
@@ -649,7 +649,7 @@ export default function Calendar() {
                                                 })}
                                     </div>
                                 </div>
-                                <div className='flex rounded-2xl border-4 border-blue-900 text-xl justify-center items-center p-2 w-full bg-white'>
+                                <div className='flex rounded-2xl border-4 border-blue-900 text-xl justify-center items-center p-2 w-40 bg-white'>
                                 <div className='justify-center'>
                                         {eventsData.map((event, eventIndex) => {
                                                     const eventDate = new Date(event.eventDate);
@@ -662,7 +662,7 @@ export default function Calendar() {
                                                         (event.eventType === 'School' && checkedSchool)) {
                                                         if (currentWeekIndex === weekIndex && eventDate.getDay() === 4) {
                                                             return (
-                                                                <div key={eventIndex} className="flex border-2 border-blue-900 bg-blue-400 text-white rounded-lg m-2 p-2 justify-center">
+                                                                <div key={eventIndex} className="flex border-2 border-blue-900 bg-blue-400 text-white rounded-lg m-2 p-2 break-all justify-center">
                                                                     {event.eventName}
                                                                 </div>
                                                             );
@@ -672,7 +672,7 @@ export default function Calendar() {
                                                 })}
                                     </div>
                                 </div>
-                                <div className='flex rounded-2xl border-4 border-blue-900 text-xl justify-center items-center p-2 w-full bg-white'>
+                                <div className='flex rounded-2xl border-4 border-blue-900 text-xl justify-center items-center p-2 w-40 bg-white'>
                                 <div className='justify-center'>
                                         {eventsData.map((event, eventIndex) => {
                                                     const eventDate = new Date(event.eventDate);
@@ -685,7 +685,7 @@ export default function Calendar() {
                                                         (event.eventType === 'School' && checkedSchool)) {
                                                         if (currentWeekIndex === weekIndex && eventDate.getDay() === 5) {
                                                             return (
-                                                                <div key={eventIndex} className="flex border-2 border-blue-900 bg-blue-400 text-white rounded-lg m-4 p-2 justify-center">
+                                                                <div key={eventIndex} className="flex border-2 border-blue-900 bg-blue-400 text-white rounded-lg m-4 p-2 break-all justify-center">
                                                                     {event.eventName}
                                                                 </div>
                                                             );
@@ -710,7 +710,7 @@ export default function Calendar() {
                                                 <div className='flex text-white font-bold grid grid-auto-rows bg-blue-400'>
                                                     <div className='text-center'>{event.eventName}</div>
                                                     <div>Description: {event.eventDescription}</div>
-                                                    <div>Date: {event.eventDate}</div>
+                                                    <div>Date: {event.eventDate.substr(0,10)}</div>
                                                     <div>Start Time: {event.eventStartTime}</div>
                                                     <div>End Time: {event.eventEndTime}</div>
                                                     <div>Location: {event.eventLocation}</div>

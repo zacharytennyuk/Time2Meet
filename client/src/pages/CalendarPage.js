@@ -53,6 +53,7 @@ export default function Calendar() {
     //              eventEndDate, eventLocation, eventType,
     //              eventUser (user database ID), eventInvitedFriends
     // modify however you'd like to display the data
+
     const getEvents = async () => {
         try {
             const id = localStorage.getItem('id');
@@ -103,6 +104,7 @@ export default function Calendar() {
 
     // Event handler for Weekly button click
     const handleWeeklyButtonClick = () => {
+        getEvents();
         setActiveTab('Weekly');
         const currentDate = new Date();
         const firstDayOfYear = new Date(currentDate.getFullYear(), 0, 1);

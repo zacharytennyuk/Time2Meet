@@ -42,9 +42,9 @@ export default function Calendar() {
 
     const [isDialogOpen, setIsDialogOpen] = useState(false);
 
-    const [checkedWork, setCheckedWork] = React.useState(false);
-    const [checkedPersonal, setCheckedPersonal] = React.useState(false);
-    const [checkedSchool, setCheckedSchool] = React.useState(false);
+    const [checkedWork, setCheckedWork] = React.useState(true);
+    const [checkedPersonal, setCheckedPersonal] = React.useState(true);
+    const [checkedSchool, setCheckedSchool] = React.useState(true);
   
     // returns an array of Event objects
     //
@@ -406,19 +406,22 @@ export default function Calendar() {
                                 {year2024[currentMonthIndex].map((week, weekIndex) => (
                                     <React.Fragment key={weekIndex}>
                                         {week.map((day, dayIndex) => (
-                                            <div key={dayIndex} className={`border-2 p-2 w-auto h-40 justify-center items-center ${day === 0 ? 'bg-blue-200 border-blue-200 z-0' : 'bg-white outline outline-3 outline-blue-900 border-blue-900 text-blue-900 z-40'}`}>
+                                            <div key={dayIndex} className={`border-2 p-2 w-auto h-40 justify-center items-center ${day === 0 ? 'bg-blue-200 border-blue-200 z-0' : 'bg-white outline outline-3 outline-blue-900 border-blue-900 text-blue-900 z-40 overflow-y-scroll'}`}>
                                                 {day !== 0 && day}
                                                 {eventsData.map((event, eventIndex) => {
                                                     const eventDate = new Date(event.eventDate);
-                                                    if (eventDate.getMonth() === currentMonthIndex && eventDate.getDate()+1 === day) {
-                                                        return (
-                                                            <div key={eventIndex} className="flex border-2 border-blue-900 text-lg text-blue-900 m-2">
-                                                                {event.eventName}
-                                                            </div>
-                                                        );
-                                                    } else {
-                                                        return null;
+                                                    if ((event.eventType === 'Work' && checkedWork) ||
+                                                        (event.eventType === 'Personal' && checkedPersonal) ||
+                                                        (event.eventType === 'School' && checkedSchool)) {
+                                                        if (eventDate.getMonth() === currentMonthIndex && eventDate.getDate() + 1 === day) {
+                                                            return (
+                                                                <div key={eventIndex} className="flex border-2 border-blue-900 bg-blue-400 text-white rounded-lg m-2 justify-center">
+                                                                    {event.eventName}
+                                                                </div>
+                                                            );
+                                                        }
                                                     }
+                                                    return null;
                                                 })}
                                             </div>
                                         ))}

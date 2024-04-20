@@ -22,7 +22,7 @@ router.post('/create-event', async (req, res) => {
         // mongo implementation
         const event = new Event({
             eventName: req.body.eventName,
-            eventDescription: req.body.eventDescriptions,
+            eventDescription: req.body.eventDescription,
             eventDate: req.body.eventDate,
             eventStartTime: req.body.eventStartTime,
             eventEndTime: req.body.eventEndTime,

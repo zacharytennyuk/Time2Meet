@@ -53,6 +53,13 @@ export default function Calendar() {
     //              eventEndDate, eventLocation, eventType,
     //              eventUser (user database ID), eventInvitedFriends
     // modify however you'd like to display the data
+
+    const [eventsData, setEventsData] = useState([]);
+
+    useEffect(() => {
+        getEvents();
+    }, []); // Empty dependency array to run once on component mount
+
     const getEvents = async () => {
         try {
             const id = localStorage.getItem('id');
@@ -64,7 +71,7 @@ export default function Calendar() {
         });
             // prints on front end for testing
             console.log('My events:', events.data);
-            
+            setEventsData(events.data);
         } catch (error) {
             alert("Error fetching events: " + error.message);
         }
@@ -400,14 +407,39 @@ export default function Calendar() {
                                         {week.map((day, dayIndex) => (
                                             <div key={dayIndex} className={`border-2 p-2 w-auto h-40 justify-center items-center ${day === 0 ? 'bg-blue-200 border-blue-200 z-0' : 'bg-white outline outline-3 outline-blue-900 border-blue-900 text-blue-900 z-40'}`}>
                                                 {day !== 0 && day}
+                                                {eventsData.map((event, eventIndex) => {
+                                                    const eventDate = new Date(event.eventDate);
+                                                    if (eventDate.getMonth() === currentMonthIndex && eventDate.getDate()+1 === day) {
+                                                        return (
+                                                            <div key={eventIndex} className="flex border-2 border-blue-900 text-lg text-blue-900 m-2">
+                                                                {event.eventName}
+                                                            </div>
+                                                        );
+                                                    } else {
+                                                        return null;
+                                                    }
+                                                })}
                                             </div>
                                         ))}
                                     </React.Fragment>
                                 ))}
                             </div>
                             <div className='flex rounded-2xl border-4 border-blue-900 justify-center items-center m-4 p-2 bg-white'>
-                                <div className='flex text-black font-bold'>
-                                    Event Info
+                                <div className='flex text-white font-bold grid grid-auto-rows'>
+                                    {eventsData.map((event, index) => (
+                                        <div key={index} className='flex rounded-2xl border-4 border-blue-900 justify-center items-center m-4 p-2 bg-blue-400'>
+                                            <div className='flex text-white font-bold grid grid-auto-rows bg-blue-400'>
+                                                <div className='text-center'>{event.eventName}</div>
+                                                <div>Description: {event.eventDescription} </div>
+                                                <div>Date: {event.eventDate}</div>
+                                                <div>Start Time: {event.eventStartTime} </div>
+                                                <div>End Time: {event.eventEndTime} </div>
+                                                <div>Location: {event.eventLocation} </div>
+                                                <div>Type: {event.eventType} </div>
+                                                <div>Friends: {event.eventInvitedFriends.join(', ')} </div>
+                                            </div>
+                                    </div>
+                                    ))}
                                 </div>
                             </div>
                         </div>     
@@ -525,9 +557,26 @@ export default function Calendar() {
                                 </div>
                             </div>
                             <div className='flex rounded-2xl border-4 border-blue-900 justify-center items-center m-4 p-2 bg-white '>
-                                <span className=" flex text-black font-bold">
-                                    Event Info
-                                </span>
+                                <div className=" flex grid grid-auto-rows">
+                                    {eventsData.map((event, index) => (
+                                            <div key={index} className='flex rounded-2xl border-4 border-blue-900 justify-center items-center m-4 p-2 bg-blue-400'>
+                                                <div className='flex text-white font-bold grid grid-auto-rows bg-blue-400'>
+                                                    <div className='text-center'>{event.eventName}</div>
+                                                    <div>Description: {event.eventDescription} </div>
+                                                    <div>Date: {event.eventDate}</div>
+                                                    <div>Start Time: {event.eventStartTime} </div>
+                                                    <div>End Time: {event.eventEndTime} </div>
+                                                    <div>Location: {event.eventLocation} </div>
+                                                    <div>Type: {event.eventType} </div>
+                                                    <div>Friends: {event.eventInvitedFriends.join(', ')} </div>
+
+
+                                                    <div>Month: {new Date(event.eventDate).getMonth()}</div>
+                                                    <div>Day: {new Date(event.eventDate).getDate()}</div>
+                                                </div>
+                                        </div>
+                                    ))}
+                                </div>
                             </div>
                         </div>
                     )}

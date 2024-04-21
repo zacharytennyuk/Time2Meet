@@ -1,4 +1,5 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import { useNavigate } from 'react-router-dom'
 import SubmitButton from '../components/submitButton';
 import EventButton from '../components/eventButton';
@@ -19,6 +20,29 @@ export default function UserHome({}) {
     // Event handler for Friends button click
     const handleFriendsButtonClick = () => {
     navigate('/friends');
+    }
+
+    const [eventsData, setEventsData] = useState([]);
+
+    useEffect(() => {
+        getEvents();
+    }, []); // Empty dependency array to run once on component mount
+
+    const getEvents = async () => {
+        try {
+            const id = localStorage.getItem('id');
+            console.log(id);
+            const events = await axios.get('http://localhost:5200/api/events/read-events', {
+            params: {
+                id: id
+            }
+        });
+            // prints on front end for testing
+            console.log('My events:', events.data);
+            setEventsData(events.data);
+        } catch (error) {
+            alert("Error fetching events: " + error.message);
+        }
     }
 
     return (

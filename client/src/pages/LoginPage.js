@@ -7,10 +7,6 @@ import TextBox from '../components/textBox';
 const Login = (props)  => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  
-  // might not be necessary - z
-  // const [usernameFinal, setUsernameFinal] = useState('');
-  // const [passwordFinal, setPasswordFinal] = useState('');
 
   const navigate = useNavigate();
 
@@ -26,8 +22,6 @@ const Login = (props)  => {
 
   // Event handler for Login button click
   const handleLoginButtonClick = async () => {
-    // setUsernameFinal(username);
-    // setPasswordFinal(password);
 
      // checks if all fields are entered
      if (

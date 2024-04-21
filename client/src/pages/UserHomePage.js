@@ -24,6 +24,9 @@ export default function UserHome({}) {
 
     const [eventsData, setEventsData] = useState([]);
 
+    // State to store filtered upcoming events
+    const [upcomingEvents, setUpcomingEvents] = useState([]);
+
     useEffect(() => {
         getEvents();
     }, []); // Empty dependency array to run once on component mount
@@ -37,6 +40,14 @@ export default function UserHome({}) {
                 id: id
             }
         });
+
+            // Filter and select upcoming events
+            const currentDate = new Date();
+            const filteredEvents = events.data.filter(event => new Date(event.eventDate) > currentDate);
+            const sortedEvents = filteredEvents.sort((a, b) => new Date(a.eventDate) - new Date(b.eventDate));
+            const selectedEvents = sortedEvents.slice(0, 3);
+            setUpcomingEvents(selectedEvents);
+
             // prints on front end for testing
             console.log('My events:', events.data);
             setEventsData(events.data);
@@ -55,7 +66,7 @@ export default function UserHome({}) {
             </div>
             <div className='grid grid-cols-3 content-center justify-center place-content-center'>
                 <div className='flex col-start-1 align-center grid grid-rows-4 h-full bg-blue-400 rounded-3xl p-4 m-4'>
-                    <div className='flex justify-center text-white text-4xl'>
+                    <div className='flex justify-center self-center text-white text-4xl'>
                         Things to Do!
                     </div>
                     <button className='bg-blue-800 text-white border-2 border-blue-500 hover:bg-white hover:text-blue-800 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 font-medium rounded-2xl text-sm px-5 py-2.5 mr-2 mb-2'onClick={handleEventButtonClick}>
@@ -69,36 +80,24 @@ export default function UserHome({}) {
                     </button>
                 </div>
                 <div className='flex col-start-2 align-center grid grid-rows-4 h-full bg-blue-400 rounded-3xl p-4 m-4'>
-                    <div className='flex justify-center text-white text-4xl'>
+                    <div className='flex justify-center self-center text-white text-4xl'>
                         Upcoming Events
                     </div>
-                    <button
-                        type=""
-                        className="flex justify-between items-center bg-blue-800 text-white border-2 border-blue-500 hover:bg-white hover:text-blue-800 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2"
-                    >
-                        <span>Event Name</span>
-                        <span>Event Time</span>
-                    </button>
-
-                    <button
-                        type=""
-                        className="flex justify-between items-center bg-blue-800 text-white border-2 border-blue-500 hover:bg-white hover:text-blue-800 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2"
-                    >
-                        <span>Event Name</span>
-                        <span>Event Time</span>
-                    </button>
-
-                    <button
-                        type=""
-                        className="flex justify-between items-center bg-blue-800 text-white border-2 border-blue-500 hover:bg-white hover:text-blue-800 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2"
-                    >
-                        <span>Event Name</span>
-                        <span>Event Time</span>
-                    </button>
-
+                                                      
+                    {/* Render EventButton components for upcoming events */}
+                    {upcomingEvents.map((event, index) => (
+                        <EventButton
+                            key={index}
+                            eventName={event.eventName}
+                            eventDate={event.eventDate.substr(0,10)}
+                            eventStartTime={event.eventStartTime}
+                            eventEndTime={event.eventEndTime}
+                        />
+                    ))}
                 </div>
+
                 <div className='flex col-start-3 align-center grid grid-rows-4 h-full bg-blue-400 rounded-3xl p-4 m-4'>
-                    <div className='flex justify-center text-white text-4xl'>
+                    <div className='flex justify-center self-center text-white text-4xl'>
                         Event Invites   
                     </div>
                     <EventButton></EventButton>

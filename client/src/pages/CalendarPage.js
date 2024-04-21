@@ -732,7 +732,6 @@ export default function Calendar() {
                                                             <div>Location: {event.eventLocation}</div>
                                                             <div>Type: {event.eventType}</div>
                                                             <div>Friends: {event.eventInvitedFriends.join(', ')}</div>
-                                                            <div>Week: {weekIndex} </div>
                                                         </div>
                                                     </div>
                                                 );

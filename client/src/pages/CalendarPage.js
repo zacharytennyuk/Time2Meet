@@ -97,8 +97,8 @@ export default function Calendar() {
     const [currentWeekIndex, setCurrentWeekIndex] = useState(() => {
         const currentDate = new Date();
         const firstDayOfYear = new Date(currentDate.getFullYear(), 0, 1);
-        const pastDaysOfYear = ((currentDate - firstDayOfYear) / 86400000)+1; // Calculate days past since beginning of the year
-        // first day of the year is a monday not a sunday so an additional offset is needed
+        const pastDaysOfYear = (((currentDate - firstDayOfYear) / 86400000)+2); // Calculate days past since beginning of the year
+        // first day of the year is a monday not a sunday so an additional offset is needed and leap year
         return Math.floor(pastDaysOfYear / 7); // Calculate current week index
     });
 
@@ -114,7 +114,7 @@ export default function Calendar() {
         setActiveTab('Weekly');
         const currentDate = new Date();
         const firstDayOfYear = new Date(currentDate.getFullYear(), 0, 1);
-        const pastDaysOfYear = (currentDate - firstDayOfYear) / 86400000; // Calculate days past since beginning of the year
+        const pastDaysOfYear = (((currentDate - firstDayOfYear) / 86400000)+2); // Calculate days past since beginning of the year
         setCurrentWeekIndex(Math.floor(pastDaysOfYear / 7)); // Calculate current week index
     };
 
@@ -428,22 +428,33 @@ export default function Calendar() {
                                     </React.Fragment>
                                 ))}
                             </div>
-                            <div className='flex rounded-2xl border-4 border-blue-900 justify-center items-center m-4 p-2 bg-white'>
+                            <div className='flex justify-center items-center m-4 p-2'>
                                 <div className='flex text-white font-bold grid grid-auto-rows'>
-                                    {eventsData.map((event, index) => (
-                                        <div key={index} className='flex rounded-2xl border-4 border-blue-900 justify-center items-center m-4 p-2 bg-blue-400'>
-                                            <div className='flex text-white font-bold grid grid-auto-rows bg-blue-400'>
-                                                <div className='text-center'>{event.eventName}</div>
-                                                <div>Description: {event.eventDescription} </div>
-                                                <div>Date: {event.eventDate.substr(0,10)}</div>
-                                                <div>Start Time: {event.eventStartTime} </div>
-                                                <div>End Time: {event.eventEndTime} </div>
-                                                <div>Location: {event.eventLocation} </div>
-                                                <div>Type: {event.eventType} </div>
-                                                <div>Friends: {event.eventInvitedFriends.join(', ')} </div>
-                                            </div>
-                                    </div>
-                                    ))}
+                                    {eventsData.map((event, index) => {
+                                        const eventDate = new Date(event.eventDate);
+                                        if ((event.eventType === 'Work' && checkedWork) ||
+                                            (event.eventType === 'Personal' && checkedPersonal) ||
+                                            (event.eventType === 'School' && checkedSchool)) {
+                                            if(eventDate.getMonth() === currentMonthIndex) {
+                                                return (
+                                                    <div key={index} className='flex rounded-2xl border-4 border-blue-900 justify-center items-center m-4 p-2 bg-blue-400'>
+                                                        <div className='flex text-white font-bold grid grid-auto-rows bg-blue-400'>
+                                                            <div className='text-center'>{event.eventName}</div>
+                                                            <div>Description: {event.eventDescription} </div>
+                                                            <div>Date: {event.eventDate.substr(0,10)}</div>
+                                                            <div>Start Time: {event.eventStartTime} </div>
+                                                            <div>End Time: {event.eventEndTime} </div>
+                                                            <div>Location: {event.eventLocation} </div>
+                                                            <div>Type: {event.eventType} </div>
+                                                            <div>Friends: {event.eventInvitedFriends.join(', ')} </div>
+                                                        </div>
+                                                    </div>
+                                                );
+                                            }
+                                        } else {
+                                            return null;
+                                        }
+                                    })}
                                 </div>
                             </div>
                         </div>     
@@ -696,29 +707,39 @@ export default function Calendar() {
                                     </div>
                                 </div>
                             </div>
-                            <div className='flex rounded-2xl border-4 border-blue-900 justify-center items-center m-4 p-2 bg-white '>
+                            <div className='flex justify-center items-center m-4 p-2'>
                                 <div className="flex grid grid-auto-rows">
                                     {eventsData.map((event, index) => {
                                         // Calculate week index
                                         const currentDate = new Date(event.eventDate);
                                         const firstDayOfYear = new Date(currentDate.getFullYear(), 0, 1);
-                                        const pastDaysOfYear = (currentDate - firstDayOfYear) / 86400000; // Calculate days past since beginning of the year
+                                        const pastDaysOfYear = (((currentDate - firstDayOfYear) / 86400000)+2); // Calculate days past since beginning of the year
                                         const weekIndex = Math.floor(pastDaysOfYear / 7); // Calculate current week index
-
-                                        return (
-                                            <div key={index} className='flex rounded-2xl border-4 border-blue-900 justify-center items-center m-4 p-2 bg-blue-400'>
-                                                <div className='flex text-white font-bold grid grid-auto-rows bg-blue-400'>
-                                                    <div className='text-center'>{event.eventName}</div>
-                                                    <div>Description: {event.eventDescription}</div>
-                                                    <div>Date: {event.eventDate.substr(0,10)}</div>
-                                                    <div>Start Time: {event.eventStartTime}</div>
-                                                    <div>End Time: {event.eventEndTime}</div>
-                                                    <div>Location: {event.eventLocation}</div>
-                                                    <div>Type: {event.eventType}</div>
-                                                    <div>Friends: {event.eventInvitedFriends.join(', ')}</div>
-                                                </div>
-                                            </div>
-                                        );
+                                        
+                                        // Check if the event belongs to the current week
+                                        if ((event.eventType === 'Work' && checkedWork) ||
+                                            (event.eventType === 'Personal' && checkedPersonal) ||
+                                            (event.eventType === 'School' && checkedSchool)) {
+                                            if(currentWeekIndex === weekIndex) {
+                                                return (
+                                                    <div key={index} className='flex rounded-2xl border-4 border-blue-900 justify-center items-center m-4 p-2 bg-blue-400'>
+                                                        <div className='flex text-white font-bold grid grid-auto-rows bg-blue-400'>
+                                                            <div className='text-center'>{event.eventName}</div>
+                                                            <div>Description: {event.eventDescription}</div>
+                                                            <div>Date: {event.eventDate.substr(0,10)}</div>
+                                                            <div>Start Time: {event.eventStartTime}</div>
+                                                            <div>End Time: {event.eventEndTime}</div>
+                                                            <div>Location: {event.eventLocation}</div>
+                                                            <div>Type: {event.eventType}</div>
+                                                            <div>Friends: {event.eventInvitedFriends.join(', ')}</div>
+                                                            <div>Week: {weekIndex} </div>
+                                                        </div>
+                                                    </div>
+                                                );
+                                            }
+                                        } else {
+                                            return null;
+                                        }
                                     })}
                                 </div>
                              </div>

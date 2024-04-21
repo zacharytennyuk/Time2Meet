@@ -11,6 +11,10 @@ const newUser = new mongoose.Schema({
         require: true
     },
     password: { type: String, required: true },
+    id: {type: mongoose.Schema.Types.ObjectId,
+        ref: 'User',
+        required: false
+    },
     events: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Event' }],
     friends: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Friend' }] 
 });

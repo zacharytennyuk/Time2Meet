@@ -1,11 +1,14 @@
 require('dotenv').config();
 const express = require('express');
-const OpenAI = require('openai');
-const openai = new OpenAI({apiKey: process.env.AI_KEY});
+const { OpenAI} = require('openai');
+const openai = new OpenAI({
+  apiKey: process.env.AI_KEY
+});
 const router = express.Router();
 
 router.post("/create-chat", async (req, res) => {
   try {
+    
     console.log("Making chat.");
 
     const { prompt } = req.body;
@@ -16,7 +19,7 @@ router.post("/create-chat", async (req, res) => {
     const chat = await openai.chat.completions.create({
       model: "gpt-3.5-turbo-0125",
       messages: [
-        { "role": "system", "content": "You help the user with events by giving ideas or offering ways to improve or plan events or meetings with friends." },
+        { "role": "system", "content": "You help the user with events by giving ideas or offering ways to improve or plan events or meetings with friends. Have a friendly tone and focus on being helpful." },
         { "role": "user", "content": prompt }
       ],
     });

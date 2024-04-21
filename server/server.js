@@ -29,24 +29,6 @@ app.use('/api/events', eventRoutes);
 app.use('/api/friends', friendRoutes);
 app.use('/api/chats', chatRoutes);
 
-app.get('/friends',(req,res) =>{
-
-const newFriend = new Friend({
-
-            userName: "following",
-            firstName: "hey",
-            lastName: "Doe"
-    
-});
-newFriend.save()
- .then ((result)=>{
-    res.send(result)
- })
- .catch((err)=> {
-    console.log(err);
- });
-
-})
 
 const port = 5200;
 

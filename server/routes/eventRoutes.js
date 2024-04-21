@@ -8,11 +8,13 @@ const ObjectId = mongoose.Types.ObjectId;
 
 // create a new event
 router.post('/create-event', async (req, res) => {
-    console.log("CREATE EVENT")
+
+    console.log("CREATING EVENT")
     console.log(req.body);
     try {
 
         const {eventName} = req.body;
+
         // checks if event already exists in database
         const eventExists = await Event.findOne({eventName});
         if(eventExists){
@@ -57,12 +59,14 @@ router.post('/create-event', async (req, res) => {
 });
 
 router.get('/read-events', async (req, res) => {
+
     console.log("arrived at /read-events")
+
     try {
         const id = req.query.id;
         console.log(id);
         const user = await User.findById(new ObjectId(id))
-            .populate('events')  // This will replace event IDs with actual event data
+            .populate('events') 
             .exec()
         if(!user){
             return res.status(404).send({message: 'User ID not found.'});

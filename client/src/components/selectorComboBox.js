@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { ChevronDownIcon } from '@heroicons/react/20/solid'
 
+// Component is used for the invited friends to an event
 const Selector = ({ invitedFriends, onInviteFriend }) => {
     const friends = [
         { name: "Kylie" },

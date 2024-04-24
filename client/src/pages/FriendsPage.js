@@ -7,13 +7,56 @@ export default function Friends() {
     const navigate = useNavigate();
     const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
     const [friend, setFriend] = useState('');
-    const [friends, setFriends] = useState([]);
+
+    const [friends, setFriends] = useState({
+        friendId: localStorage.id,
+        userName: '',
+        firstName: '',
+        lastName: '',
+        friendArr: []
+});
     const [loading, setLoading] = useState(false);
 
     // Callback function to update friend state
     const handleFriendChange = (value) => {
         setFriend(value);
     };
+
+    /* document.addEventListener('DOMContentLoaded', function () {
+        const addBtn = document.getElementById('addFriendButton');
+        if (addBtn) {
+            addBtn.addEventListener('click', getFriends);
+        } else {
+            console.log('Button not found');
+        }
+    });
+    
+*/
+    useEffect(() => {
+        //localStorage.setItem('id', friends.id)
+
+        getFriends();
+    }, []);
+    
+    const getFriends = async () => {
+        try {
+            const id = localStorage.getItem('id');
+            console.log('friends id:', friend.id);
+            console.log("user id:", id);
+            const response = await axios.get('http://localhost:5200/api/friends/display-friends', {
+                params: {
+                     id: id }
+            });
+            console.log('My friends:', response.data);
+            setFriends(response.data);
+        } catch (error) {
+            console.error("Error fetching friends:", error);
+            alert("Error fetching friends: " + error.message);
+        }
+    };
+    
+
+    
 
     // Event handler for Home button click
     const handleAddButtonClick = async () => {
@@ -32,15 +75,22 @@ export default function Friends() {
         } finally {
             setLoading(false);
         }
+       
+
     };
 
+    
+
     // Fetch friends data when component mounts
-    useEffect(() => {
+   
+   /* useEffect(() => {
+       
         const fetchFriends = async () => {
             setFriends(['Zachary Tenn Yuk', 'Kylie Lennon', 'Veronica Yap', 'Winnie Augustin', 'Kyle Lemon']);
+            
             try {
                 setLoading(true);
-                const response = await axios.get('http://localhost:5200/api/friends/display-friends');
+               const response = await axios.get('http://localhost:5200/api/friends/display-friends', { userName: friend });
                 setFriends(response.data.friends);
                 //console.log(friends[0]);
             } catch (error) {
@@ -51,8 +101,13 @@ export default function Friends() {
         };
 
         fetchFriends();
-    }, []);
+    }, []); */
 
+    
+   
+    
+
+    
     // Event handler for Home button click
     const handleHomeButtonClick = () => {
         navigate('/user-home');
@@ -85,7 +140,7 @@ export default function Friends() {
                                     Your Friends
                                 </div>
                                 <div className='flex row-span-12 overflow-y-scroll justify-center w-full'>
-                                    <div className='flex grid grid-rows-auto w-full'>
+                                   {/* //<div className='flex grid grid-rows-auto w-full'>
                                         {alphabet.filter(letter => friends.some(friendName => friendName.charAt(0).toUpperCase() === letter)).map((letter, index) => (
                                             <div key={index} className='flex grid grid-rows-auto'>
                                                 <div className='flex border-b-4 justify-center text-xl text-blue-900 border-blue-900 h-8'>{letter}</div>
@@ -99,7 +154,7 @@ export default function Friends() {
                                                 </div>
                                             </div>
                                         ))}
-                                    </div>
+                                    </div> */}
                                 </div>
                             </div>
                         </div>
@@ -117,7 +172,12 @@ export default function Friends() {
                                     />
                                 </div>
                                 <div className='flex row-start-3 justify-center'>
-                                    <button className='bg-blue-800 text-white border-2 border-blue-500 hover:bg-white hover:text-blue-800 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 w-1/3'onClick={handleAddButtonClick}>Add</button>
+                                    <button 
+                                    id="addFriendButton"
+                                     className='bg-blue-800 text-white border-2 border-blue-500 hover:bg-white hover:text-blue-800 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 w-1/3'
+                                     onClick={handleAddButtonClick}>
+                                        Add
+                                    </button>
                                 </div>
                             </div>
                         </div>

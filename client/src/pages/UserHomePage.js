@@ -34,7 +34,6 @@ export default function UserHome({}) {
     const getEvents = async () => {
         try {
             const id = localStorage.getItem('id');
-            console.log(id);
             const events = await axios.get('http://localhost:5200/api/events/read-events', {
             params: {
                 id: id
@@ -49,7 +48,6 @@ export default function UserHome({}) {
             setUpcomingEvents(selectedEvents);
 
             // prints on front end for testing
-            console.log('My events:', events.data);
             setEventsData(events.data);
         } catch (error) {
             alert("Error fetching events: " + error.message);

@@ -42,9 +42,6 @@ const Login = (props)  => {
         localStorage.setItem('token', login.data.token);
         localStorage.setItem('id', login.data.id);
 
-        // console.log("token:", localStorage.token);
-        // console.log("id:", localStorage.id);
-
         navigate('/user-home');
       } else{
         alert('Username or password is incorrect.');
@@ -53,7 +50,7 @@ const Login = (props)  => {
       if (error.response) {
         alert(error.response.data.message);
       } else {
-        alert('Unidentified login error, please try again!');
+        alert('Unidentified login error, please try again!');x
       }
     }
 

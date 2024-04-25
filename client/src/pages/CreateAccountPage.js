@@ -49,17 +49,12 @@ export default function CreateAccount({}) {
             localStorage.setItem('id', response.data.id);
             
             alert(response.data.message);
-            
-            console.log("token:", localStorage.token);
-            console.log("id:", localStorage.id);
 
             navigate('/user-home');
 
         } catch (error) {
             if (error.response && error.response.status === 400) {
                 alert(error.response.data.message); // "Please choose a different username."
-            } else {
-                console.error('Unidentified error :/', error);
             }
         }
     };

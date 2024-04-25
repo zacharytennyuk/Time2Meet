@@ -52,7 +52,7 @@ export default function Event() {
     const [invitedFriends, setInvitedFriends] = useState([]);
 
     const updateInvitedFriends = (friendName) => {
-        console.log("Updating friends with: ", friendName);
+
         let updatedInvitedFriends;
         if (invitedFriends.includes(friendName)) {
             updatedInvitedFriends = invitedFriends.filter(name => name !== friendName);
@@ -98,15 +98,11 @@ export default function Event() {
        
         try {
             //send to backend with axios
-            console.log("token:", localStorage.token);
-            console.log("id:", localStorage.id);
             const response = await axios.post('http://localhost:5200/api/events/create-event', eventData);
             alert(response.data.message);
         } catch (error) {
             if (error.response) {
                 alert(error.response.data.message);
-            } else {
-                console.error('Unidentified error :/', error);
             }
         }
     };

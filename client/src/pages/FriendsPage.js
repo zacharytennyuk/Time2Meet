@@ -22,16 +22,6 @@ export default function Friends() {
         setFriend(value);
     };
 
-    /* document.addEventListener('DOMContentLoaded', function () {
-        const addBtn = document.getElementById('addFriendButton');
-        if (addBtn) {
-            addBtn.addEventListener('click', getFriends);
-        } else {
-            console.log('Button not found');
-        }
-    });
-    
-*/
     useEffect(() => {
         //localStorage.setItem('id', friends.id)
 
@@ -41,16 +31,13 @@ export default function Friends() {
     const getFriends = async () => {
         try {
             const id = localStorage.getItem('id');
-            console.log('friends id:', friend.id);
-            console.log("user id:", id);
             const response = await axios.get('http://localhost:5200/api/friends/display-friends', {
                 params: {
                      id: id }
             });
-            console.log('My friends:', response.data);
             setFriends(response.data);
         } catch (error) {
-            console.error("Error fetching friends:", error);
+            // console.error("Error fetching friends:", error);
             alert("Error fetching friends: " + error.message);
         }
     };
@@ -70,7 +57,7 @@ export default function Friends() {
             } else if (error.response && error.response.status === 400) {
                 alert(error.response.data.message);
             } else {
-                console.error('Unidentified error :/', error);
+                // console.error('Unidentified error :/', error);
             }
         } finally {
             setLoading(false);
@@ -79,35 +66,6 @@ export default function Friends() {
 
     };
 
-    
-
-    // Fetch friends data when component mounts
-   
-   /* useEffect(() => {
-       
-        const fetchFriends = async () => {
-            setFriends(['Zachary Tenn Yuk', 'Kylie Lennon', 'Veronica Yap', 'Winnie Augustin', 'Kyle Lemon']);
-            
-            try {
-                setLoading(true);
-               const response = await axios.get('http://localhost:5200/api/friends/display-friends', { userName: friend });
-                setFriends(response.data.friends);
-                //console.log(friends[0]);
-            } catch (error) {
-                console.error('Error fetching friends:', error);
-            } finally {
-                setLoading(false);
-            }
-        };
-
-        fetchFriends();
-    }, []); */
-
-    
-   
-    
-
-    
     // Event handler for Home button click
     const handleHomeButtonClick = () => {
         navigate('/user-home');

@@ -6,7 +6,7 @@ const router = express.Router();
 
 // create a new user account
 router.post('/create-account', async (req, res) => {
-    console.log("arrived at /create-account")
+    // console.log("arrived at /create-account")
     try {
 
         const {firstName, lastName, userName, password} = req.body;
@@ -47,7 +47,7 @@ router.post('/create-account', async (req, res) => {
 
 // user login to application
 router.post('/login', async (req, res) => {
-    console.log("arrived at /login route")
+    // console.log("arrived at /login route")
     try {
 
         const {firstName, lastName, userName, password} = req.body;

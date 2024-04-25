@@ -63,14 +63,11 @@ export default function Calendar() {
     const getEvents = async () => {
         try {
             const id = localStorage.getItem('id');
-            console.log(id);
             const events = await axios.get('http://localhost:5200/api/events/read-events', {
             params: {
                 id: id
             }
         });
-            // prints on front end for testing
-            console.log('My events:', events.data);
             setEventsData(events.data);
         } catch (error) {
             alert("Error fetching events: " + error.message);
@@ -551,7 +548,7 @@ export default function Calendar() {
                                                     const firstDayOfYear = new Date(eventDate.getFullYear(), 0, 1);
                                                     const pastDaysOfYear = (eventDate - firstDayOfYear) / 86400000; // Calculate days past since beginning of the year
                                                     const weekIndex = Math.floor(pastDaysOfYear / 7)+1; // Calculate current week index
-                                                    console.log(eventDate.getDay());
+                                                    
                                                     if ((event.eventType === 'Work' && checkedWork) ||
                                                         (event.eventType === 'Personal' && checkedPersonal) ||
                                                         (event.eventType === 'School' && checkedSchool)) {
@@ -574,7 +571,7 @@ export default function Calendar() {
                                                     const firstDayOfYear = new Date(eventDate.getFullYear(), 0, 1);
                                                     const pastDaysOfYear = (eventDate - firstDayOfYear) / 86400000; // Calculate days past since beginning of the year
                                                     const weekIndex = Math.floor(pastDaysOfYear / 7)+1; // Calculate current week index
-                                                    console.log(eventDate.getDay());
+                                                    
                                                     if ((event.eventType === 'Work' && checkedWork) ||
                                                         (event.eventType === 'Personal' && checkedPersonal) ||
                                                         (event.eventType === 'School' && checkedSchool)) {
@@ -597,7 +594,7 @@ export default function Calendar() {
                                                     const firstDayOfYear = new Date(eventDate.getFullYear(), 0, 1);
                                                     const pastDaysOfYear = (eventDate - firstDayOfYear) / 86400000; // Calculate days past since beginning of the year
                                                     const weekIndex = Math.floor(pastDaysOfYear / 7); // Calculate current week index
-                                                    console.log(eventDate.getDay());
+                                                    
                                                     if ((event.eventType === 'Work' && checkedWork) ||
                                                         (event.eventType === 'Personal' && checkedPersonal) ||
                                                         (event.eventType === 'School' && checkedSchool)) {
@@ -620,7 +617,7 @@ export default function Calendar() {
                                                     const firstDayOfYear = new Date(eventDate.getFullYear(), 0, 1);
                                                     const pastDaysOfYear = (eventDate - firstDayOfYear) / 86400000; // Calculate days past since beginning of the year
                                                     const weekIndex = Math.floor(pastDaysOfYear / 7); // Calculate current week index
-                                                    console.log(eventDate.getDay());
+                                                    
                                                     if ((event.eventType === 'Work' && checkedWork) ||
                                                         (event.eventType === 'Personal' && checkedPersonal) ||
                                                         (event.eventType === 'School' && checkedSchool)) {
@@ -643,7 +640,7 @@ export default function Calendar() {
                                                     const firstDayOfYear = new Date(eventDate.getFullYear(), 0, 1);
                                                     const pastDaysOfYear = (eventDate - firstDayOfYear) / 86400000; // Calculate days past since beginning of the year
                                                     const weekIndex = Math.floor(pastDaysOfYear / 7); // Calculate current week index
-                                                    console.log(eventDate.getDay());
+                                                    
                                                     if ((event.eventType === 'Work' && checkedWork) ||
                                                         (event.eventType === 'Personal' && checkedPersonal) ||
                                                         (event.eventType === 'School' && checkedSchool)) {
@@ -666,7 +663,7 @@ export default function Calendar() {
                                                     const firstDayOfYear = new Date(eventDate.getFullYear(), 0, 1);
                                                     const pastDaysOfYear = (eventDate - firstDayOfYear) / 86400000; // Calculate days past since beginning of the year
                                                     const weekIndex = Math.floor(pastDaysOfYear / 7); // Calculate current week index
-                                                    console.log(eventDate.getDay());
+                                                    
                                                     if ((event.eventType === 'Work' && checkedWork) ||
                                                         (event.eventType === 'Personal' && checkedPersonal) ||
                                                         (event.eventType === 'School' && checkedSchool)) {
@@ -689,7 +686,7 @@ export default function Calendar() {
                                                     const firstDayOfYear = new Date(eventDate.getFullYear(), 0, 1);
                                                     const pastDaysOfYear = (eventDate - firstDayOfYear) / 86400000; // Calculate days past since beginning of the year
                                                     const weekIndex = Math.floor(pastDaysOfYear / 7); // Calculate current week index
-                                                    console.log(eventDate.getDay());
+                                                    
                                                     if ((event.eventType === 'Work' && checkedWork) ||
                                                         (event.eventType === 'Personal' && checkedPersonal) ||
                                                         (event.eventType === 'School' && checkedSchool)) {

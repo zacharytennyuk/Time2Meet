@@ -16,14 +16,11 @@ export default function ChatPage() {
 
         try {
             const result = await axios.post(`http://localhost:5200/api/chats/create-chat`, { prompt: inputText });
-            console.log(result);
             
             setChat(result.data.CHAT);
-            console.log(chat);
             
         } catch (error) {
-            console.error("Error fetching panel:", error);
-            alert("Error generating panel: " + error.message);
+            alert("Error generating chat: " + error.message);
         } finally {
             setIsGenerating(false);
         }
